@@ -1,7 +1,6 @@
 <?php
 include_once("../../configuracion.php");
 $datos = data_submitted();
-print_r($datos);
 $rpta = '';
 $abmuser = new AbmUsuario();
 if($abmuser->buscar(['usnombre' => $datos['usnombre']])){
@@ -9,7 +8,11 @@ if($abmuser->buscar(['usnombre' => $datos['usnombre']])){
 }elseif($abmuser->buscar(['usmail' => $datos['usmail']])){
     $rpta = 2;
 }else{
-    $rpta = 3;
+    if($abmuser->alta($datos)){
+        $rpta = 3;
+    }else{
+        $rpta = 4;
+    }
 }
 echo json_encode($rpta);
 ?>

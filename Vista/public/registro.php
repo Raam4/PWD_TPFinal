@@ -21,7 +21,7 @@ include_once("../estructura/header.php");
                 </div>
                 <div class="card-body">
                     <p class="login-box-msg">Registro de nuevo usuario</p>
-                    <form id="registro" name="registro" class="mb-2" action="../accion/accionRegistro.php" method="post">
+                    <form id="registro" name="registro" class="mb-2" method="post">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Nombre de usuario" id="usnombre" name="usnombre">
                             <div class="input-group-append">
@@ -86,6 +86,21 @@ include_once("../estructura/header.php");
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-success" id="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Registro</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <p>(Click fuera del recuadro para salir)</p>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="../js/port_md5.js"></script>
 <script>
     $(document).ready(function(){
@@ -105,7 +120,10 @@ include_once("../estructura/header.php");
             $('#repeMail').hide();
             var dataToSend = {
                 'usnombre': $('#usnombre').val(),
-                'usmail': $('#usmail').val()
+                'usfecnac': $('#usfecnac').val(),
+                'usmail': $('#usmail').val(),
+                'ustelefono': $('#ustelefono').val(),
+                'uspass': md5($('#uspass').val()),
             };
             $.ajax({
                 method: 'post',
@@ -113,14 +131,22 @@ include_once("../estructura/header.php");
                 data: dataToSend,
                 type: 'json',
                 success: function(data) {
-                    if(data == 1){
+                    if(data == '1'){
                         $('#repeUser').show();
                     }
-                    if(data == 2){
+                    if(data == '2'){
                         $('#repeMail').show();
                     }
-                    if(data == 3){
-                        $('#registro').off().submit();
+                    if(data == '3'){
+                        $('#registro')[0].reset();
+                        $('#modal-content').attr('class', 'modal-content bg-success');
+                        $('#modalMsg').text('Usted se ha registrado con éxito. En breve, un administrador revisará sus datos y le asignará un rol.');
+                        $('#modal').modal('show');
+                    }
+                    if(data == '4'){
+                        $('#modal-content').attr('class', 'modal-content bg-danger');
+                        $('#modalMsg').text('Algo salió mal, por favor revise los datos ingresados e intente nuevamente');
+                        $('#modal').modal('show');
                     }
                 },
                 error: function (data) {
