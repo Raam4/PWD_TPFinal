@@ -78,17 +78,17 @@ class Maker{
         $abmmenu = new AbmMenu();
         $menus = $abmrol->menus($rol);
         $idmenu = $menus[0]['idmenu'];
-        $strhtml = '<li class="nav-header">'.$menus[0]['menombre'].'</li>';
+        $strhtml = '<li class="nav-header">'.ucfirst($menus[0]['menombre']).'</li>';
         foreach($abmmenu->submenus(['idmenu' => $idmenu]) as $submenu){
             if($submenu['medeshabilitado'] == "0000-00-00 00:00:00"){
                 $dosub = $abmmenu->submenus(['idmenu' => $submenu['idmenu']]);
                 if($dosub){
                     $strhtml .= '
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php" class="nav-link">
                                 <i class="nav-icon fas fa-circle"></i>
                                 <p>
-                                    '.$submenu['menombre'].'
+                                    '.ucfirst($submenu['menombre']).'
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -98,9 +98,9 @@ class Maker{
                         if($submenu['medeshabilitado'] == "0000-00-00 00:00:00"){
                             $strhtml .= '
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="../'.$submenu['menombre'].'/'.$subsubmenu['menombre'].'.php" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>'.$subsubmenu['menombre'].'</p>
+                                        <p>'.ucfirst($subsubmenu['menombre']).'</p>
                                     </a>
                                 </li>
                             ';
@@ -110,9 +110,9 @@ class Maker{
                 }else{
                     $strhtml .= '
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
-                            <p>'.$submenu['menombre'].'</p>
+                            <p>'.ucfirst($submenu['menombre']).'</p>
                         </a>
                     </li>
                     ';
