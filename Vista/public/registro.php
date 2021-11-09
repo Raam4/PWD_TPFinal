@@ -107,7 +107,6 @@ include_once("../estructura/header.php");
                 'usnombre': $('#usnombre').val(),
                 'usmail': $('#usmail').val()
             };
-            var evento = false;
             $.ajax({
                 method: 'post',
                 url: '../accion/accionRegJS.php',
@@ -121,7 +120,6 @@ include_once("../estructura/header.php");
                         $('#repeMail').show();
                     }
                     if(data == 3){
-                        console.log(data);
                         $('#registro').off().submit();
                     }
                 },

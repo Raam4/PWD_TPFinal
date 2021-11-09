@@ -68,7 +68,7 @@ include_once("../estructura/header.php");
             Este .on nos va a server para cachar el evento submit, cuando haces click en un boton del tipo "submit" y quiere enviar el formulario, lo hago de esta forma por si tienes un required en un input o algun type="email" de HTML5 se haga la validacion antes de enviar los datos. De igual forma es buena practica hacer una validacion en el back antes de hacer cualquier cosa.
         */
         $('#login').on('submit', function () { // Nos suscribimos al evento "submit" de nuestro formulario el cual se lanzara al hacer click en un boton del tipo submit
-            var dataToSend = {'usnombre' : $('#usnombre').val(), 'uspass' : md5($('#uspass').val())}//$(this).serialize(); //Aqui ya tenemos el contexto del formulario por eso usamos $(this)
+            var dataToSend = {'usnombre' : $('#usnombre').val(), 'uspass' : md5($('#uspass').val())}
             // Despues hacemos el $.ajax
             $.ajax({
                 method: 'POST', // Metodo a utilizar POST, GET, etc...

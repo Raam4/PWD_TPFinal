@@ -1,6 +1,7 @@
 <?php
 include_once("../../configuracion.php");
 $datos = data_submitted();
+print_r($datos);
 $rpta = '';
 $abmuser = new AbmUsuario();
 if($abmuser->buscar(['usnombre' => $datos['usnombre']])){
