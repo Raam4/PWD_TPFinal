@@ -7,6 +7,7 @@ if(!$objSess->activa()) {
     $perfil = Maker::perfil(null);
     $menu = Maker::menu(['idrol'=>4]);
 }
+$abmrubro = new AbmRubro();
 include_once("../estructura/header.php");
 ?>
 
@@ -61,25 +62,131 @@ include_once("../estructura/header.php");
             <span class="visually-hidden">Next</span>
             </button>
         </div>
-    <div class="row">
-        
-    <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Default Card Example</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
-                    </div>
-                </div>
+    
+    <div class="row ms-1">
+        <div class="col-md-3">
+            <div class="card sticky-top">
                 <div class="card-body">
-                    The body of the card
-                </div>
-                <div class="card-footer d-flex">
-                    
+                    <h3>Filtros</h3>
+                    <div class="form-group">
+                        <?php
+                            foreach($abmrubro->buscar(array()) as $rubro){
+                                if(is_null($rubro['idpadre'])){
+                                    $desc = $rubro['rudescripcion'];
+                        ?>
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input custom-control-input-danger" type="checkbox" id="<?php echo $desc?>" checked="">
+                            <label for="<?php echo $desc?>" class="custom-control-label"><?php echo $desc?></label>
+                        </div>
+                        <?php }}?>
+                    </div>
                 </div>
             </div>
         </div>
-        
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&height=418">
+                        
+                        
+                        <div class="card-body">
+                            <h2 class="card-title">Default Card Example</h2><br>
+                            <p>Descripcion</p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <h3>$9999</h3><button type="button" class="btn btn-sm btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <?php include_once("../estructura/footer.php"); ?>
