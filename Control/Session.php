@@ -31,6 +31,7 @@ class Session{
                 $_SESSION["idusuario"] = $list[0]['idusuario'];
                 $roles = $abmUs->roles(["idusuario"=>$list[0]['idusuario']]);
                 $_SESSION["rolactivo"] = $roles[0]['idrol'];
+                $_SESSION["carrito"] = array();
                 $valido=true;
             }            
         }
@@ -93,16 +94,76 @@ class Session{
         }
     }
 
-    //agregar setters
+    public function getCarrito(){
+        return $_SESSION["carrito"];
+    }
+
+    /**
+     * Recibe un arreglo asociativo con claves idproducto y cantidad
+     */
+    public function sumarAlCarrito($param){
+        $abmprod = new AbmProducto();
+        $var = false;
+        $i = 0;
+        while($i < len($_SESSION['carrito']) && !$var){
+            if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
+                $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
+                $prod[0]['procantstock'] -= $param['cantidad'];
+                $abmprod->modificacion($prod[0]);
+                $_SESSION['carrito'][$i]['cantidad'] += $param['cantidad'];
+                $var = true;
+            }else{
+                $i++;
+            }
+        }
+        if(!$var){
+            $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
+            $prod[0]['procantstock'] -= $param['cantidad'];
+            $abmprod->modificacion($prod[0]);
+            array_push($_SESSION['carrito'], $param);
+            $var = true;
+        }
+        return $var;
+    }
+
+    /**
+     * Recibe un arreglo asociativo con claves idproducto y cantidad
+     */
+    public function restarAlCarrito($param){
+        $abmprod = new AbmProducto();
+        $var = false;
+        $i = 0;
+        while($i < len($_SESSION['carrito']) && !$var){
+            if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
+                $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
+                $prod[0]['procantstock'] += $param['cantidad'];
+                $abmprod->modificacion($prod[0]);
+                $_SESSION['carrito'][$i]['cantidad'] -= $param['cantidad'];
+                $var = true;
+            }else{
+                $i++;
+            }
+        }
+        return $var;
+    }
+
+    public function vaciarCarrito(){
+        $abmprod = new AbmProducto();
+        foreach($_SESSION['carrito'] as $item){
+            $prod = $abmprod->buscar(['idproducto' => $item['idproducto']]);
+            $prod[0]['procantstock'] += $item['cantidad'];
+            $abmprod->modificacion($prod[0]);
+        }
+        return $_SESSION['carrito'] = array();
+    }
 
     /**
      * Cierra la sesión actual
      */
     public function cerrar(){
-        $close=false;
-        if(session_destroy()){
-            $close=true;
+        if($_SESSION['carrito']){
+            $this->vaciarCarrito();
         }
-        return $close;
+        return session_destroy();
     }
 }
