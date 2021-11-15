@@ -63,11 +63,11 @@ include_once("../estructura/header.php");
                     <div id='filtros'>
                         <h3>Filtros</h3>
                         <div class="form-group">
-                        <?php
-                            $abmrubro = new AbmRubro();
-                            foreach($abmrubro->buscar(array()) as $rubro){
-                                $desc = $rubro['runombre'];
-                        ?>
+                            <?php
+                                $abmrubro = new AbmRubro();
+                                foreach($abmrubro->buscar(array()) as $rubro){
+                                    $desc = $rubro['runombre'];
+                            ?>
                             <div class="custom-control custom-checkbox">
                                 <input class="custom-control-input custom-control-input-danger" type="checkbox" value="<?php echo $rubro['idrubro'];?>" id="<?php echo $desc;?>" checked>
                                 <label for="<?php echo $desc;?>" class="custom-control-label"><?php echo $desc;?></label>
@@ -84,50 +84,5 @@ include_once("../estructura/header.php");
         </div>
     </div>
 </div>
-<script>
-    $('#filtros').ready(function(){
-        $('input[type=checkbox]').each(function(){
-            if($(this).is(':checked')){
-                var self = $(this);
-                var select = '#rub'+self.val();
-                $.ajax({
-                        method: 'POST',
-                        url: '../accion/accionProducto.php',
-                        data: {'idrubro' : self.val()},
-                        type: 'json',
-                        success: function(ret) {
-                            $('#filaProd').append(JSON.parse(ret));
-                        },
-                        error: function (ret) {
-                        }
-                });
-            };
-        });
-    });
-
-    $('#filtros').ready(function(){
-        $('input[type=checkbox]').on('change', function() {
-            var self = $(this);
-            var select = '#rub'+self.val();
-            if(!self.is(':checked')){
-                $(select).each(function(){
-                    $(this).remove();
-                });
-            }else{
-                $.ajax({
-                    method: 'POST',
-                    url: '../accion/accionProducto.php',
-                    data: {'idrubro' : self.val()},
-                    type: 'json',
-                    success: function(ret) {
-                        $('#filaProd').append(JSON.parse(ret));
-                    },
-                    error: function (ret) {
-                    }
-                });
-            }
-        });
-    });
-</script>
-
+<script src="../js/prodCliente.js"></script>
 <?php include_once("../estructura/footer.php"); ?>

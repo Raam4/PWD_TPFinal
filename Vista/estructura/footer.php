@@ -8,5 +8,6 @@
 <!--<script type="text/javascript" src="../js/bootstrap/validator.js"></script>-->
 <script src="../../vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 <script src="../../vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
+<script src="../js/toastr.min.js"></script>
 </body>
 </html>

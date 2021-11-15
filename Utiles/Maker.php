@@ -112,7 +112,7 @@ class Maker{
                     <li class="nav-item">
                         <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
-                            <p>'.ucfirst($submenu['menombre']).'</p>
+                            <p id="'.$submenu['menombre'].'">'.ucfirst($submenu['menombre']).'</p>
                         </a>
                     </li>
                     ';

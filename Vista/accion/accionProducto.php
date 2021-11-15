@@ -8,15 +8,19 @@ $ret = '<div class="col-md-4" id="rub'.$data['idrubro'].'">
                 <div class="card-body">
                     <div class="row">';
 foreach($producto->buscar($data) as $prod){
-    $ret .= '<div class="col-md-8">
+    $id = $prod['idproducto'];
+    $ret .= '<div class="col-md-6">
                 <h2 class="card-title">'.$prod['pronombre'].'</h2><br>
                 <p>'.$prod['prodetalle'].'</p>
             </div>
-            <div class="col-md-4 text-end">
+            <div class="col-md-6 text-end">
                 <h1>$'.$prod['proprecio'].'</h1><br>';
     if(!($prod['procantstock'] == 0)){
-        $ret .= '<input class="col-6 rounded-0" type="number" id="cant" min="1" max="'.$prod['procantstock'].'" value="1">
-                <button type="button" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>';
+        $ret .= '<form class="agrega">
+                <input type="hidden" name="idproducto" value="'.$id.'">
+                <input class="col-6 rounded-0" type="number" name="cantidad" min="1" max="'.$prod['procantstock'].'" value="1">
+                <button type="submit" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                </form>';
     }else{
         $ret .= '<p>Sin stock</p>';
     }

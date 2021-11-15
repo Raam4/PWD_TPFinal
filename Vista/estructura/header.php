@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="../../vendor/almasaeed2010/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="../css/toastr.css">
     <script src="../js/jquery/jquery-3.6.0.min.js"></script>
     <title><?php $Titulo ?></title>
   </head>

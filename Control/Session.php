@@ -105,10 +105,12 @@ class Session{
         $abmprod = new AbmProducto();
         $var = false;
         $i = 0;
-        while($i < len($_SESSION['carrito']) && !$var){
+        $stock = 0;
+        while($i < count($_SESSION['carrito']) && !$var){
             if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
                 $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
                 $prod[0]['procantstock'] -= $param['cantidad'];
+                $stock = $prod[0]['procantstock'];
                 $abmprod->modificacion($prod[0]);
                 $_SESSION['carrito'][$i]['cantidad'] += $param['cantidad'];
                 $var = true;
@@ -119,11 +121,11 @@ class Session{
         if(!$var){
             $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
             $prod[0]['procantstock'] -= $param['cantidad'];
+            $stock = $prod[0]['procantstock'];
             $abmprod->modificacion($prod[0]);
             array_push($_SESSION['carrito'], $param);
-            $var = true;
         }
-        return $var;
+        return $stock;
     }
 
     /**
@@ -133,12 +135,15 @@ class Session{
         $abmprod = new AbmProducto();
         $var = false;
         $i = 0;
-        while($i < len($_SESSION['carrito']) && !$var){
+        while($i < count($_SESSION['carrito']) && !$var){
             if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
                 $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
                 $prod[0]['procantstock'] += $param['cantidad'];
                 $abmprod->modificacion($prod[0]);
                 $_SESSION['carrito'][$i]['cantidad'] -= $param['cantidad'];
+                if($_SESSION['carrito'][$i]['cantidad'] == 0){
+                    unset($_SESSION['carrito'][$i]);
+                }
                 $var = true;
             }else{
                 $i++;
