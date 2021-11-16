@@ -80,9 +80,64 @@ include_once("../estructura/header.php");
         </div>
         <div class="col-md-9">
             <div class="row" id="filaProd">
+                <!-- start prod card -->
+                <?php
+                    $abmprod = new AbmProducto();
+                    foreach($abmprod->buscar(array()) as $producto){
+                        
+                ?>
+                <div class="col-md-4 <?=$producto['idrubro'];?>">
+                    <div class="card">
+                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&amp;height=418">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 class="card-title"><?php echo $producto['pronombre'];?></h2><br>
+                                    <p><?php echo $producto['prodetalle'];?></p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <h1>$<?php echo $producto['proprecio'];?></h1>
+                                    <br>
+                                    <form class="prod-form">
+                                        <input type="hidden" name="idproducto" value="<?=$producto['idproducto'];?>">
+                                        <input class="col-6 rounded-0" type="number" name="cantidad" min="1" max="<?=$producto['procantstock'];?>" value="1">
+                                        <button type="submit" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+                <!-- end prod card -->
             </div>
         </div>
     </div>
 </div>
-<script src="../js/prodCliente.js"></script>
+<script>
+    $(document).ready(function(){
+    $('input[type=checkbox]').click(function(){
+        var sqr = $(this);
+        var idrubro = $(sqr).val();
+        if($(sqr).is(':checked')){
+            $('.'+idrubro).show();
+        }else{
+            $('.'+idrubro).hide();
+        }
+    });
+    $('form.prod-form').on('submit', function(){
+        var data = $(this).serialize();
+        $.ajax({
+            method: 'POST',
+            url: '../accion/accionProdSumar.php',
+            data: data,
+            type: 'json',
+            success: function(){
+                toastr.success('Producto agregado!');
+            }
+        });
+        return false;
+    });
+});
+</script>
 <?php include_once("../estructura/footer.php"); ?>
