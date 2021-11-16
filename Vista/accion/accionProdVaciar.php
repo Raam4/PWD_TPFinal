@@ -1,5 +1,7 @@
 <?php
 include_once('../../configuracion.php');
 $sess = new Session();
-$sess->vaciarCarrito();
+foreach($sess->getCarrito() as $item){
+    $sess->sacarDelCarrito($item);
+}
 ?>

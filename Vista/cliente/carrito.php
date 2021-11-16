@@ -38,10 +38,8 @@ $abmprod = new AbmProducto();
                     $i = 1;
                     $total = 0;
                     foreach($carrito as $item){
-                        $prod = $abmprod->buscar(['idproducto' => $item['idproducto']]);
+                        $prod = $abmprod->buscar(['idproducto' => $item]);
                         $prod = $prod[0];
-                        $sub = $prod['proprecio'] * $item['cantidad'];
-                        $total += $sub;
                     ?>
                     <tr>
                         <td>
@@ -54,7 +52,7 @@ $abmprod = new AbmProducto();
                         </td>
                         <td>
                             <h4>
-                                <?php echo $item['cantidad']; ?>
+                                <?php  ?>
                             </h4>
                         </td>
                         <td>
@@ -64,13 +62,13 @@ $abmprod = new AbmProducto();
                         </td>
                         <td>
                             <h4>
-                                <?php echo '$'.$sub; ?>
+                                <?php echo '$'?>
                             </h4>
                         </td>
                         <td>
                             <form class="resta">
-                                <input type="hidden" name="idproducto" value="<?php echo $item['idproducto']?>">
-                                <input type="number" name="cantidad" class="col-6 rounded-0" min="1" value="<?php echo $item['cantidad']?>" max="<?php echo $item['cantidad']?>">
+                                <input type="hidden" name="idproducto" value="<?=$item?>">
+                                <input type="number" name="cantidad" class="col-6 rounded-0" min="1" value="1" max="<?=$prod['procantstock']+1?>">
                                 <button class="btn btn-warning btn-sm" type="submit">
                                     <i class="fas fa-minus"></i> Restar
                                 </button>
@@ -84,7 +82,7 @@ $abmprod = new AbmProducto();
                         Total de compra
                     </td>
                     <td>
-                        <?php echo '$'.$total; ?>
+                        <?php echo '$' ?>
                     </td>
                     <td>
                         <button class="btn btn-danger btn-sm" type="button" id="vaciar">

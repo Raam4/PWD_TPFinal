@@ -99,76 +99,36 @@ class Session{
     }
 
     /**
-     * Recibe un arreglo asociativo con claves idproducto y cantidad
+     * Recibe int con el idproducto
      */
-    public function sumarAlCarrito($param){
-        $abmprod = new AbmProducto();
+    public function agregarAlCarrito($param){
         $var = false;
-        $i = 0;
-        $stock = 0;
-        while($i < count($_SESSION['carrito']) && !$var){
-            if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
-                $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
-                $prod[0]['procantstock'] -= $param['cantidad'];
-                $stock = $prod[0]['procantstock'];
-                $abmprod->modificacion($prod[0]);
-                $_SESSION['carrito'][$i]['cantidad'] += $param['cantidad'];
-                $var = true;
-            }else{
-                $i++;
-            }
-        }
-        if(!$var){
-            $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
-            $prod[0]['procantstock'] -= $param['cantidad'];
-            $stock = $prod[0]['procantstock'];
-            $abmprod->modificacion($prod[0]);
+        if(!in_array($param, $_SESSION['carrito'])){
             array_push($_SESSION['carrito'], $param);
+            $var = true;
         }
-        return $stock;
+        return $var;
     }
 
     /**
      * Recibe un arreglo asociativo con claves idproducto y cantidad
      */
-    public function restarAlCarrito($param){
-        $abmprod = new AbmProducto();
+    public function sacarDelCarrito($param){
         $var = false;
         $i = 0;
-        while($i < count($_SESSION['carrito']) && !$var){
-            if($_SESSION['carrito'][$i]['idproducto'] == $param['idproducto']){
-                $prod = $abmprod->buscar(['idproducto' => $param['idproducto']]);
-                $prod[0]['procantstock'] += $param['cantidad'];
-                $abmprod->modificacion($prod[0]);
-                $_SESSION['carrito'][$i]['cantidad'] -= $param['cantidad'];
-                if($_SESSION['carrito'][$i]['cantidad'] == 0){
-                    unset($_SESSION['carrito'][$i]);
-                }
+        while($i<count($_SESSION['carrito']) && !$var){
+            if($_SESSION['carrito'][$i] == $param){
+                unset($_SESSION['carrito'][$i]);
                 $var = true;
-            }else{
-                $i++;
             }
         }
         return $var;
-    }
-
-    public function vaciarCarrito(){
-        $abmprod = new AbmProducto();
-        foreach($_SESSION['carrito'] as $item){
-            $prod = $abmprod->buscar(['idproducto' => $item['idproducto']]);
-            $prod[0]['procantstock'] += $item['cantidad'];
-            $abmprod->modificacion($prod[0]);
-        }
-        return $_SESSION['carrito'] = array();
     }
 
     /**
      * Cierra la sesión actual
      */
     public function cerrar(){
-        if($_SESSION['carrito']){
-            $this->vaciarCarrito();
-        }
         return session_destroy();
     }
 }

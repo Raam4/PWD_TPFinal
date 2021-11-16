@@ -2,8 +2,8 @@
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
 include_once("../estructura/header.php");
+$carroEnCarga = $objSess->getCarrito();
 ?>
-
 <div class="content-wrapper">
         <div id="myCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -98,11 +98,28 @@ include_once("../estructura/header.php");
                                 <div class="col-md-6 text-end">
                                     <h1>$<?php echo $producto['proprecio'];?></h1>
                                     <br>
-                                    <form class="prod-form">
-                                        <input type="hidden" name="idproducto" value="<?=$producto['idproducto'];?>">
-                                        <input class="col-6 rounded-0" type="number" name="cantidad" min="1" max="<?=$producto['procantstock'];?>" value="1">
-                                        <button type="submit" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
-                                    </form>
+                                    <div id="btns<?=$producto['idproducto'];?>">
+                                        <?php
+                                            if($producto['procantstock'] != 0){
+                                                if(!in_array($producto['idproducto'], $carroEnCarga)){
+                                        ?>
+                                        <form class="prod-form">
+                                            <input type="hidden" name="idproducto" value="<?=$producto['idproducto'];?>">
+                                            <button type="submit" id="btn<?=$producto['idproducto'];?>" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
+                                        </form>
+                                        <?php 
+                                                }else{
+                                        ?>
+                                        <button type="button" class="btn btn-sm btn-rounded btn-success"><i class="fas fa-check"></i> En el carro</button>
+                                        <?php
+                                                }
+                                            }else{
+                                        ?>
+                                        <button type="button" class="btn btn-sm btn-rounded btn-danger"><i class="fas fa-times"></i> Sin stock</button>
+                                        <?php
+                                            }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -114,6 +131,7 @@ include_once("../estructura/header.php");
         </div>
     </div>
 </div>
+<button id="enCarro" type="button" hidden class="btn btn-sm btn-rounded btn-success"><i class="fas fa-check"></i> En el carro</button>
 <script>
     $(document).ready(function(){
     $('input[type=checkbox]').click(function(){
@@ -126,7 +144,8 @@ include_once("../estructura/header.php");
         }
     });
     $('form.prod-form').on('submit', function(){
-        var data = $(this).serialize();
+        var elem = $(this);
+        var data = $(elem).serialize();
         $.ajax({
             method: 'POST',
             url: '../accion/accionProdSumar.php',
@@ -134,6 +153,8 @@ include_once("../estructura/header.php");
             type: 'json',
             success: function(){
                 toastr.success('Producto agregado!');
+                $('#btns'+data.idproducto).empty();
+                $('#enCarro').clone().appendTo('#btns'+data.idproducto);
             }
         });
         return false;
