@@ -136,7 +136,7 @@ $productos = $abmprod->buscar(array());
 </div>
 <script>
     function editar(id){
-        var dataToSend = {'idproducto': id}
+        var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
             url: '../accion/accionProdStock.php',
@@ -152,11 +152,20 @@ $productos = $abmprod->buscar(array());
                 $('#prodetalle').val(data.prodetalle);
                 $('#modal').modal('show');
             }
-        })
+        });
     }
 
-    function añadir(){
-        
+    function borrar(id){
+        var dataToSend = {'idproducto': id};
+        $.ajax({
+            method: 'post',
+            url: '../accion/accionBorrarStock.php',
+            data: dataToSend,
+            type: 'json',
+            success: function(data){
+                toastr.error('Producto eliminado.');
+            }
+        });
     }
 
     $(document).ready(function(){
@@ -168,9 +177,9 @@ $productos = $abmprod->buscar(array());
                 data: dataToSend,
                 type: 'json',
                 success: function(){
-                    return true;
+                    $('#form-modal').off().submit();
                 }
-            })
+            });
             return false;
         });
     });
