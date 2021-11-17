@@ -1,0 +1,25 @@
+
+body{font-family:Helvetica, sans-serif;}
+
+.brand-text, .textArch{color: #ddaa44ff; font-family: 'Architects Daughter';}
+#titleInd{font-size: 50px;}
+
+#wrapM li{color: rgb(173, 126, 30);}
+
+#wrapM p{color: rgb(187, 138, 40);}
+
+#header-nav{background-color: #ddaa44ff;}
+#cerrarSess{color: #ddaa44ff;}
+
+#asidecont{
+    background-color: #1b120d;
+}
+/* #txtlog{color: #1b120d;} */
+.login-box a:link,#lgReg{color: #1b120d;}
+.login-box a:hover,#lgReg:hover{color: #ddaa44ff;}
+section p{
+    font-size: 20px;
+}
+/* section img{
+    width: 300px;
+} */
