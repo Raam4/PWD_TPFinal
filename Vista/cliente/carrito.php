@@ -14,10 +14,7 @@ $abmprod = new AbmProducto();
             <table class="table table-striped text-center">
                 <thead>
                     <tr>
-                        <th style="width: 1%">
-                            #
-                        </th>
-                        <th style="width: 30%">
+                        <th style="width: 20%">
                             Producto
                         </th>
                         <th style="width: 10%">
@@ -30,21 +27,19 @@ $abmprod = new AbmProducto();
                             Precio total
                         </th>
                         <th style="width: 29%">
+                            Acciones
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $i = 1;
                     $total = 0;
                     foreach($carrito as $item){
                         $prod = $abmprod->buscar(['idproducto' => $item]);
                         $prod = $prod[0];
+                        $total += $prod['proprecio'];
                     ?>
                     <tr>
-                        <td>
-                            <?php echo $i; $i++; ?>
-                        </td>
                         <td>
                             <h4>
                                 <?php echo $prod['pronombre']; ?>
@@ -52,40 +47,38 @@ $abmprod = new AbmProducto();
                         </td>
                         <td>
                             <h4>
-                                <?php  ?>
+                                <input type="number" id="<?=$prod['idproducto']?>" name="cantidad" class="col-6 rounded-1" min="1" value="1" max="<?=$prod['procantstock']+1?>">
                             </h4>
                         </td>
                         <td>
-                            <h4>
+                            <h4 id="impunit<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
                                 <?php echo '$'.$prod['proprecio']; ?>
                             </h4>
                         </td>
                         <td>
-                            <h4>
-                                <?php echo '$'?>
+                            <h4 id="imptot<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
+                                <?php echo '$'.$prod['proprecio'];?>
                             </h4>
                         </td>
                         <td>
-                            <form class="resta">
-                                <input type="hidden" name="idproducto" value="<?=$item?>">
-                                <input type="number" name="cantidad" class="col-6 rounded-0" min="1" value="1" max="<?=$prod['procantstock']+1?>">
-                                <button class="btn btn-warning btn-sm" type="submit">
-                                    <i class="fas fa-minus"></i> Restar
-                                </button>
-                            </form>
+                            <button class="btn btn-danger btn-md" type="button">
+                                <i class="fas fa-times"></i> Quitar
+                            </button>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
                 <tfoot>
-                    <td colspan="4">
+                    <td colspan="3">
                         Total de compra
                     </td>
                     <td>
-                        <?php echo '$' ?>
+                        <h3 id="totcar" class="<?=$total?>">
+                            <?php echo '$'.$total?>
+                        </h3>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm" type="button" id="vaciar">
+                        <button class="btn btn-danger btn-md" type="button" id="vaciar">
                             <i class="fas fa-trash"></i> Vaciar
                         </button>
                     </td>
@@ -96,18 +89,17 @@ $abmprod = new AbmProducto();
 </div>
 <script>
     $(document).ready(function(){
-        $('form.resta').on('submit', function(){
-            var elem = $(this);
-            $.ajax({
-                method: 'POST',
-                url: '../accion/accionProdRestar.php',
-                data: elem.serialize(),
-                type: 'json',
-                success: function(){
-                    toastr.success('Producto descontado!');
-                }
-            })
-            return false;
+        $(':input').on('change', function(){
+            var id = $(this).attr('id');
+            var precio = $('#impunit'+id).attr('class');
+            var total = 0;
+            $('#imptot'+id).text('$'+(precio*$(this).val()));
+            $('#imptot'+id).attr('class', '$'+(precio*$(this).val()));
+            $("[id^='imptot']").each(function(){
+                total += $(this).attr('class');
+            });
+            $('#totcar').empty();
+            $('#totcar').text('$'+total); //por que aparece el $0?
         });
         $('#vaciar').on('click', function(){
             var elem = $(this);

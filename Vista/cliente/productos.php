@@ -103,10 +103,7 @@ $carroEnCarga = $objSess->getCarrito();
                                             if($producto['procantstock'] != 0){
                                                 if(!in_array($producto['idproducto'], $carroEnCarga)){
                                         ?>
-                                        <form class="prod-form">
-                                            <input type="hidden" name="idproducto" value="<?=$producto['idproducto'];?>">
-                                            <button type="submit" id="btn<?=$producto['idproducto'];?>" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
-                                        </form>
+                                        <button type="submit" onclick="agregar(<?=$producto['idproducto'];?>)" class="btn btn-md btn-rounded btn-primary"><i class="fas fa-cart-plus"></i></button>
                                         <?php 
                                                 }else{
                                         ?>
@@ -131,21 +128,22 @@ $carroEnCarga = $objSess->getCarrito();
         </div>
     </div>
 </div>
-<button id="enCarro" type="button" hidden class="btn btn-sm btn-rounded btn-success"><i class="fas fa-check"></i> En el carro</button>
+<button type="button" hidden class="btn btn-sm btn-rounded btn-success enCarro"><i class="fas fa-check"></i> En el carro</button>
 <script>
     $(document).ready(function(){
-    $('input[type=checkbox]').click(function(){
-        var sqr = $(this);
-        var idrubro = $(sqr).val();
-        if($(sqr).is(':checked')){
-            $('.'+idrubro).show();
-        }else{
-            $('.'+idrubro).hide();
-        }
+        $('input[type=checkbox]').click(function(){
+            var sqr = $(this);
+            var idrubro = $(sqr).val();
+            if($(sqr).is(':checked')){
+                $('.'+idrubro).show();
+            }else{
+                $('.'+idrubro).hide();
+            }
+        });
     });
-    $('form.prod-form').on('submit', function(){
-        var elem = $(this);
-        var data = $(elem).serialize();
+
+    function agregar(id){
+        var data = {'idproducto' : id};
         $.ajax({
             method: 'POST',
             url: '../accion/accionProdSumar.php',
@@ -154,11 +152,11 @@ $carroEnCarga = $objSess->getCarrito();
             success: function(){
                 toastr.success('Producto agregado!');
                 $('#btns'+data.idproducto).empty();
-                $('#enCarro').clone().appendTo('#btns'+data.idproducto);
+                $('.enCarro').clone().appendTo('#btns'+data.idproducto);
+                $('#btns'+data.idproducto+' > .enCarro').attr('id', 'enCarro'+data.idproducto);
+                $('#enCarro'+data.idproducto).removeAttr('hidden');
             }
         });
-        return false;
-    });
-});
+    };
 </script>
 <?php include_once("../estructura/footer.php"); ?>

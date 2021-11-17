@@ -5,7 +5,7 @@
 // CONFIGURACION APP//
 /////////////////////////////
 
-$PROYECTO ='PWD_TPFinal - prueba';
+$PROYECTO ='PWD_TPFinal---prueba';
 
 //variable que almacena el directorio del proyecto
 $ROOT =$_SERVER['DOCUMENT_ROOT']."/$PROYECTO/";
