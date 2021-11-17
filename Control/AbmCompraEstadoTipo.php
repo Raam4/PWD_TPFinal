@@ -1,5 +1,5 @@
 <?php
-class AbmCompraestadotipo extends AbmSuper{
+class AbmCompraEstadoTipo extends AbmSuper{
     
     public function __construct(){
         $this->clase = new CompraEstadoTipo();

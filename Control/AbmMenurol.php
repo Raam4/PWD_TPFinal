@@ -1,5 +1,5 @@
 <?php
-class AbmMenurol extends AbmSuper{
+class AbmMenuRol extends AbmSuper{
     
     public function seteadosCamposClaves($param){
         return isset($param[$this->id[0]]) && isset($param[$this->id[1]]);

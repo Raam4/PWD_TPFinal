@@ -19,7 +19,7 @@ include_once("../estructura/header.php");
                     <div class="col-lg-6 order-lg-1">
                         <div class="text-center p-5">
                             <h2 class="display-7">Somos Toc Toc Delivery</h2>
-                            <p >Escribimos un whatsapp y pedí nuestra lista de productos, hay combos de todo tipo, para toda ocasión.</p>
+                            <p >Escribinos un whatsapp y pedí nuestra lista de productos, hay combos de todo tipo, para toda ocasión.</p>
                         </div>
                     </div>
                 </div>
