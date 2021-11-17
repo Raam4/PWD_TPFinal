@@ -121,7 +121,9 @@ class Session{
                 unset($_SESSION['carrito'][$i]);
                 $var = true;
             }
+            $i++;
         }
+        sort($_SESSION['carrito']);
         return $var;
     }
 

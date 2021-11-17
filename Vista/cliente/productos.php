@@ -84,7 +84,6 @@ $carroEnCarga = $objSess->getCarrito();
                 <?php
                     $abmprod = new AbmProducto();
                     foreach($abmprod->buscar(array()) as $producto){
-                        
                 ?>
                 <div class="col-md-4 <?=$producto['idrubro'];?>">
                     <div class="card">
@@ -128,7 +127,9 @@ $carroEnCarga = $objSess->getCarrito();
         </div>
     </div>
 </div>
-<button type="button" hidden class="btn btn-sm btn-rounded btn-success enCarro"><i class="fas fa-check"></i> En el carro</button>
+<div hidden id='divEnCarro'>
+<button type="button" class="btn btn-sm btn-rounded btn-success enCarro"><i class="fas fa-check"></i> En el carro</button>
+</div>
 <script>
     $(document).ready(function(){
         $('input[type=checkbox]').click(function(){
@@ -152,9 +153,8 @@ $carroEnCarga = $objSess->getCarrito();
             success: function(){
                 toastr.success('Producto agregado!');
                 $('#btns'+data.idproducto).empty();
-                $('.enCarro').clone().appendTo('#btns'+data.idproducto);
+                $('#divEnCarro > .enCarro').clone().appendTo('#btns'+data.idproducto);
                 $('#btns'+data.idproducto+' > .enCarro').attr('id', 'enCarro'+data.idproducto);
-                $('#enCarro'+data.idproducto).removeAttr('hidden');
             }
         });
     };
