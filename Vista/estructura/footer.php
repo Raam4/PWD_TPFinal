@@ -1,8 +1,8 @@
 <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-        <a href="#">Back to top</a>
+        <a href="#" style="color:#ddaa44ff;">Subir</a>
     </div>
-    <strong>Sitio construido por Lucia Landaeta y Ramiro Cardozo, para la materia Programación Web Dinámica.</strong> All rights reserved.
+    <strong>Sitio construido por Lucia Landaeta y Ramiro Cardozo, para la materia Programación Web Dinámica. </strong> All rights reserved.
 </footer>
 </div>
 <!--<script type="text/javascript" src="../js/bootstrap/validator.js"></script>-->

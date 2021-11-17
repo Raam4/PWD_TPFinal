@@ -15,13 +15,13 @@ include_once("../estructura/header.php");
 <div class="content-wrapper">
     <div class="row justify-content-center pt-5">
         <div class="login-box">
-            <div class="card card-outline card-primary">
+            <div class="card card-outline card-warning">
                 <div class="card-header text-center">
-                        <a href="Index.php" class="h1"><b>Carrito</b></a>
+                        <!-- <a href="Index.php" class="h2"><b>Ingreso</b></a> -->
                 </div>
                 <div class="card">
                     <div class="card-body login-card-body">
-                        <p class="login-box-msg">Iniciar Sesión</p>
+                        <p class="login-box-msg h4">Iniciar Sesión</p>
                         <form method="POST" name="login" id="login">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Nombre de usuario" name="usnombre" id="usnombre">
@@ -46,14 +46,14 @@ include_once("../estructura/header.php");
                                 </div>
                             </div>
                             <div class="row">
-                                    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-block">Ingresar</button>
                             </div>
                         </form>
                         <p class="my-1">
-                            <a href="#">Olvidé mi contraseña</a>
+                            <a href="#" >Olvidé mi contraseña</a>
                         </p>
                         <p class="mb-0">
-                            <a href="registro.php" class="text-center">Quiero registrarme</a>
+                            <a href="registro.php" id="lgReg">Quiero registrarme</a>
                         </p>
                     </div>
                 </div>
