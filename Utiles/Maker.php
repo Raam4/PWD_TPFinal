@@ -80,7 +80,7 @@ class Maker{
         $idmenu = $menus[0]['idmenu'];
         $strhtml = '<li class="nav-header">'.ucfirst($menus[0]['menombre']).'</li>';
         foreach($abmmenu->submenus(['idmenu' => $idmenu]) as $submenu){
-            if($submenu['medeshabilitado'] == "0000-00-00 00:00:00"){
+            if($submenu['medeshabilitado'] == "0000-00-00 00:00:00" || is_null($submenu['medeshabilitado'])){
                 $dosub = $abmmenu->submenus(['idmenu' => $submenu['idmenu']]);
                 if($dosub){
                     $strhtml .= '
@@ -95,7 +95,7 @@ class Maker{
                             <ul class="nav nav-treeview">
                     ';
                     foreach($dosub as $subsubmenu){
-                        if($submenu['medeshabilitado'] == "0000-00-00 00:00:00"){
+                        if($submenu['medeshabilitado'] == "0000-00-00 00:00:00" || is_null($submenu['medeshabilitado'])){
                             $strhtml .= '
                                 <li class="nav-item">
                                     <a href="../'.$submenu['menombre'].'/'.$subsubmenu['menombre'].'.php" class="nav-link">

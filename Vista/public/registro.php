@@ -127,7 +127,7 @@ include_once("../estructura/header.php");
             };
             $.ajax({
                 method: 'post',
-                url: '../accion/accionRegJS.php',
+                url: '../accion/public/accionRegJS.php',
                 data: dataToSend,
                 type: 'json',
                 success: function(data) {

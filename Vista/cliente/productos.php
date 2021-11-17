@@ -147,7 +147,7 @@ $carroEnCarga = $objSess->getCarrito();
         var data = {'idproducto' : id};
         $.ajax({
             method: 'POST',
-            url: '../accion/accionProdSumar.php',
+            url: '../accion/cliente/accionProdSumar.php',
             data: data,
             type: 'json',
             success: function(){

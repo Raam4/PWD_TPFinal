@@ -114,15 +114,17 @@ $(document).ready(function(){
 });
 function cancelar(idce){
     var dataToSend = {'idcompraestado' : idce};
-    $.ajax({
-        method: 'post',
-        url: '../accion/accionCancelaCompra.php',
-        data: dataToSend,
-        type: 'json',
-        success: function(data){
-            console.log('ok');
-        }
-    });
+    if(confirm("Desea cancelar el pedido?")){
+        $.ajax({
+            method: 'post',
+            url: '../accion/cliente/accionCancelaCompra.php',
+            data: dataToSend,
+            type: 'json',
+            success: function(data){
+                toastr.success('Pedido cancelado');
+            }
+        });
+    }
 }
 </script>
 <?php include_once("../estructura/footer.php");?>

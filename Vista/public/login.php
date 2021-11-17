@@ -64,16 +64,12 @@ include_once("../estructura/header.php");
 <script src="../js/port_md5.js"></script>
 <script>
     $('body').ready(function () {
-        /*
-            Este .on nos va a server para cachar el evento submit, cuando haces click en un boton del tipo "submit" y quiere enviar el formulario, lo hago de esta forma por si tienes un required en un input o algun type="email" de HTML5 se haga la validacion antes de enviar los datos. De igual forma es buena practica hacer una validacion en el back antes de hacer cualquier cosa.
-        */
-        $('#login').on('submit', function () { // Nos suscribimos al evento "submit" de nuestro formulario el cual se lanzara al hacer click en un boton del tipo submit
+        $('#login').on('submit', function () {
             var dataToSend = {'usnombre' : $('#usnombre').val(), 'uspass' : md5($('#uspass').val())}
-            // Despues hacemos el $.ajax
             $.ajax({
-                method: 'POST', // Metodo a utilizar POST, GET, etc...
-                url: '../accion/accionLogin.php', // URL de la pagina que recibira la petición
-                data: dataToSend, // Aqui van los datos a enviar, en este caso serializamos los campos del formulario y los asinamos a esta variable por eso solo ponemos esta variable
+                method: 'POST',
+                url: '../accion/public/accionLogin.php',
+                data: dataToSend,
                 type: 'json',
                 success: function(data) {
                     if(data == 'true'){
@@ -81,13 +77,12 @@ include_once("../estructura/header.php");
                     }else{
                         $('#noCred').show();
                     }
-                    // Este callback que se lanzara si la url 'myPage.php' responde como un status 200: OK, y lo que imprimas en php lo cachara en la variable data.
                 },
                 error: function (data) {
-                    console.log(data); // Este callback que se lanzara si la url 'myPage.php' responde con status de error, e.g. 400, 404, 500, etc...
+                    console.log(data);
                 }
             });
-            return false; // Este return es para que no se lanze el evento submit al navegador y no brinque de pagina, si no que se queda esperando la respuesta de nuestra llamada ajax.
+            return false;
         });
     });
 </script>
