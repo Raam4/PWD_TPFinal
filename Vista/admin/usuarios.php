@@ -4,13 +4,16 @@ include_once("../../Utiles/sessmanager.php");
 include_once("../estructura/header.php");
 ?>
 
-
 <div class="content-wrapper">
-    <div class="row mt-5">
-        <div id="salida">
-            <!-- Se genera la lista -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Usuarios</h3>
         </div>
-
+        <div class="card-body">
+            <div id="salida">
+                <!-- Se genera la lista -->
+            </div>
+        </div>
     </div>
 </div>
 
@@ -202,3 +205,4 @@ include_once("../estructura/header.php");
         $(dlg).hide();
     }
 </script>
+<?php include_once('../estructura/footer.php'); ?>
