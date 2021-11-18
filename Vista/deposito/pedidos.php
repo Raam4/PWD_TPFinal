@@ -101,13 +101,13 @@ $compras = $abmcompra->buscar(array());
                         </td>
                         <td id="<?=$idce?>" class="btnacciones">
                             <input type="hidden" id="estado<?=$idce?>" value="<?=$idcet?>">
-                            <button class="btn btn-outline-info btn-sm" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-info btn-sm m-1" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
                                 <i class="fas fa-check"></i> Aceptar
                             </button>
-                            <button class="btn btn-outline-success btn-sm" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-success btn-sm m-1" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
                                 <i class="fas fa-paper-plane"></i> Enviar
                             </button>
-                            <button class="btn btn-outline-danger btn-sm" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-danger btn-sm m-1" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </td>

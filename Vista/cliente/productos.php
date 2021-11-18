@@ -95,7 +95,7 @@ $carroEnCarga = $objSess->getCarrito();
                 ?>
                 <div class="col-md-4 <?=$producto['idrubro'];?>">
                     <div class="card">
-                        <img class="card-img-top"  src="<?php echo $rutaimg.$producto['pronombre'].$producto['idproducto'].".jpg"  ?> ">
+                        <img class="card-img-top"  src="<?php echo $rutaimg.md5($producto['pronombre'].$producto['idproducto']).".jpg"  ?> ">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -166,5 +166,6 @@ $carroEnCarga = $objSess->getCarrito();
             }
         });
     };
+    
 </script>
 <?php include_once("../estructura/footer.php"); ?>
