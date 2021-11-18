@@ -12,7 +12,7 @@ include_once("../estructura/header.php");
 $carroEnCarga = $objSess->getCarrito();
 ?>
 <div class="content-wrapper">
-        <div id="myCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div id="myCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
             <div class="carousel-indicators">
             <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
@@ -20,35 +20,34 @@ $carroEnCarga = $objSess->getCarrito();
             </div>
             <div class="carousel-inner">
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
-                <!-- <img class="bd-placeholder-img" src="../css/img/slider1.png" alt=""> -->
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"  preserveAspectRatio="xMidYMid slice" focusable="false"><image width="100%" x="5" y="-15"  href="../css/img/7.jpg" /></svg>
                 <div class="container">
                 <div class="carousel-caption text-start">
-                    <h1>Example headline.</h1>
-                    <p>Escribinos un whatsapp y pedí nuestra lista de productos, hay combos de todo tipo para salvar tus juntadas</p>
-                    <p><a class="btn btn-lg btn-primary" href="#">Contactanos</a></p>
+                    <h1 class="txtArchBl">Salvamos tu previa</h1>                    
+                    <p class="txtArchBl"><b>Pedí nuestra lista de productos para salvar tus juntadas</b></p>
+                    <!-- <p><a class="btn btn-lg btn-outline-warning" href="../public/contacto.php">Contactanos</a></p> -->
                 </div>
                 </div>
             </div>
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
+            <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><image width="100%"   y="-8" href="../css/img/4.jpg" /></svg>
 
                 <div class="container">
-                <div class="carousel-caption">
-                    <h1>Another example headline.</h1>
-                    <p>Some representative placeholder content for the second slide of the carousel.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                <div class="carousel-caption text-start">
+                    <h1 class="txtArchBl">Encuantro casual</h1>
+                    <p  class="txtArchBl"><b>Toc Toc te balca</b></p>
+                    <!-- <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> -->
                 </div>
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><image width="100%"  y="-10" href="../css/img/6.jpg" /></svg>
 
                 <div class="container" >
                 <div class="carousel-caption text-end" >
-                    <h1>One more for good measure.</h1>
-                    <p>Some representative placeholder content for the third slide of this carousel.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+                    <h1 class="txtArchBl">Listos para todo tipo de encuentro</h1>
+                    <p class="txtArchBl">Tenemos tus bebidas favoritas</p>
+                    <!-- <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p> -->
                 </div>
                 </div>
             </div>
