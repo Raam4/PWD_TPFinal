@@ -34,7 +34,7 @@ $compras = $abmcompra->buscar(array());
             <h3>Pedidos</h3>
         </div>
         <div class="card-body">
-            <table class="table table-striped text-center">
+            <table class="table  text-center">
                 <thead>
                     <tr>
                         <th style="width: 10%">
@@ -101,13 +101,13 @@ $compras = $abmcompra->buscar(array());
                         </td>
                         <td id="<?=$idce?>" class="btnacciones">
                             <input type="hidden" id="estado<?=$idce?>" value="<?=$idcet?>">
-                            <button class="btn btn-info btn-sm" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-info btn-sm" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
                                 <i class="fas fa-check"></i> Aceptar
                             </button>
-                            <button class="btn btn-success btn-sm" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-success btn-sm" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
                                 <i class="fas fa-paper-plane"></i> Enviar
                             </button>
-                            <button class="btn btn-danger btn-sm" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-danger btn-sm" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </td>

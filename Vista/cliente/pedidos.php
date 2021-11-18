@@ -45,7 +45,7 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
             <h3 class="txtArchBl">Pedidos</h3>
         </div>
         <div class="card-body">
-            <table class="table table-striped text-center">
+            <table class="table text-center">
                 <thead>
                     <tr>
                         <th style="width: 15%">

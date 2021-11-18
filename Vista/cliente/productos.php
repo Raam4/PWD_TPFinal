@@ -68,7 +68,7 @@ $carroEnCarga = $objSess->getCarrito();
             <div class="card sticky-top mx-3">
                 <div class="card-body">
                     <div id='filtros'>
-                        <h3>Filtros</h3>
+                        <h2 class="textArch">Filtros</h2>
                         <div class="form-group">
                             <?php
                                 $abmrubro = new AbmRubro();
@@ -100,7 +100,7 @@ $carroEnCarga = $objSess->getCarrito();
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2 class="card-title"><?php echo $producto['pronombre'];?></h2><br>
-                                    <p><?php echo $producto['prodetalle'];?></p>
+                                    <p class="descP"><?php echo $producto['prodetalle'];?></p>
                                 </div>
                                 <div class="col-md-6 text-end">
                                     <h5>$<?php echo $producto['proprecio'];?></h5>
