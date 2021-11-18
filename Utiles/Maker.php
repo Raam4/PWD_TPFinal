@@ -78,7 +78,7 @@ class Maker{
         $abmmenu = new AbmMenu();
         $menus = $abmrol->menus($rol);
         $idmenu = $menus[0]['idmenu'];
-        $strhtml = '<li class="nav-header">'.ucfirst($menus[0]['menombre']).'</li>';
+        $strhtml = '<li class="nav-header"><b>'.ucfirst($menus[0]['menombre']).'</b></li>';
         foreach($abmmenu->submenus(['idmenu' => $idmenu]) as $submenu){
             if($submenu['medeshabilitado'] == "0000-00-00 00:00:00" || is_null($submenu['medeshabilitado'])){
                 $dosub = $abmmenu->submenus(['idmenu' => $submenu['idmenu']]);
