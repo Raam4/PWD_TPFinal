@@ -134,7 +134,7 @@ include_once("../estructura/header.php");
                 "medescripcion": currentRow.find("td:eq(2)").html(),
                 "idpadre": currentRow.find("td:eq(3)").html()
             };
-            controlButton(col1, 0);
+            // controlButton(col1, 0);
             editar(dataF);
         })
 
@@ -147,10 +147,7 @@ include_once("../estructura/header.php");
             $('#confirmIt' + id).show();
             $('#cancelIt' + id).show();
         } else {
-            $('#editarIt'+id).show();
-            $('#borrarIt' + id).show();
-            $('#confirmIt' + id).hide();
-            $('#cancelIt' + id).hide();
+            $("#salidaItm").load('../accion/admin/accionListarItemM.php');
         }
     }
 
