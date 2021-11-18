@@ -97,7 +97,7 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
                         <button class="btn btn-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
                             <i class="fas fa-times"></i> Cancelar
                         </button>
-                        </td>
+                    </td>
                 </tbody>
                 <?php } ?>
             </table>
