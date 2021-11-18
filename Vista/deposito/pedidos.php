@@ -8,6 +8,7 @@ $abmcompra = new AbmCompra();
 $abmcompraitem = new AbmCompraItem();
 $abmcompraestado = new AbmCompraEstado();
 $abmcompraestadotipo = new AbmCompraEstadoTipo();
+$abmuser = new AbmUsuario();
 $compras = $abmcompra->buscar(array());
 ?>
 <style type="text/css">
@@ -24,7 +25,7 @@ $compras = $abmcompra->buscar(array());
     <?php
     if(!$compras){
     ?>
-    <h1>No posee pedidos</h1>
+    <h1>No existen pedidos</h1>
     <?php
     }else{
     ?>
@@ -36,13 +37,16 @@ $compras = $abmcompra->buscar(array());
             <table class="table table-striped text-center">
                 <thead>
                     <tr>
-                        <th style="width: 15%">
+                        <th style="width: 10%">
                             ID Pedido
+                        </th>
+                        <th style="width: 15%">
+                            Usuario
                         </th>
                         <th style="width: 15%">
                             Fecha y hora
                         </th>
-                        <th style="width: 25%">
+                        <th style="width: 20%">
                             Productos
                         </th>
                         <th style="width: 15%">
@@ -60,6 +64,7 @@ $compras = $abmcompra->buscar(array());
                     <?php
                     foreach($compras as $pedido){
                         $id = $pedido['idcompra'];
+                        $usuario = $abmuser->buscar(['idusuario' => $pedido['idusuario']]);
                         $compraitem = $abmcompraitem->buscar(['idcompra' => $id]);
                         $compraestado = $abmcompraestado->buscar(['idcompra' => $id]);
                         $idce = $compraestado[0]['idcompraestadotipo'];
@@ -68,6 +73,9 @@ $compras = $abmcompra->buscar(array());
                     ?>
                     <td>
                         <?=$id?>
+                    </td>
+                    <td>
+                        <?=$usuario[0]['usnombre']?>
                     </td>
                     <td>
                         <?=$pedido['cofecha']?>
@@ -91,12 +99,26 @@ $compras = $abmcompra->buscar(array());
                     </td>
                     <td>
                         <?php
-                        $dis = $estadotipo[0]['idcompraestadotipo'] != 1 ? 'disabled' : '';
+                        if($estadotipo[0]['idcompraestadotipo'] == 1){
+                        ?>
+                        <button class="btn btn-info btn-sm" type="button" onclick="aceptar(<?=$idce?>)">
+                            <i class="fas fa-check"></i> Aceptar
+                        </button>
+                        <?php }
+                        if($estadotipo[0]['idcompraestadotipo'] == 2){?>
+                        <button class="btn btn-success btn-sm" type="button" onclick="enviar(<?=$idce?>)">
+                            <i class="fas fa-paper-plane"></i> Enviar
+                        </button>
+                        <?php }
+                        $dis = '';
+                        if($estadotipo[0]['idcompraestadotipo'] == 3 || $estadotipo[0]['idcompraestadotipo'] == 4){
+                            $dis = 'disabled';
+                        }
                         ?>
                         <button class="btn btn-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
                             <i class="fas fa-times"></i> Cancelar
                         </button>
-                        </td>
+                    </td>
                 </tbody>
                 <?php } ?>
             </table>
@@ -111,6 +133,34 @@ $compras = $abmcompra->buscar(array());
 $(document).ready(function(){
     $('[data-bs-toggle="popover"]').popover();
 });
+function aceptar(idce){
+    var dataToSend = {'idcompraestado' : idce};
+    if(confirm("Desea aceptar el pedido?")){
+        $.ajax({
+            method: 'post',
+            url: '../accion/deposito/accionAceptaCompra.php',
+            data: dataToSend,
+            type: 'json',
+            success: function(data){
+                toastr.success('Pedido aceptado!');
+            }
+        });
+    }
+}
+function enviar(idce){
+    var dataToSend = {'idcompraestado' : idce};
+    if(confirm("Desea enviar el pedido?")){
+        $.ajax({
+            method: 'post',
+            url: '../accion/deposito/accionEnviaCompra.php',
+            data: dataToSend,
+            type: 'json',
+            success: function(data){
+                toastr.success('Pedido enviado!');
+            }
+        });
+    }
+}
 function cancelar(idce){
     var dataToSend = {'idcompraestado' : idce};
     if(confirm("Desea cancelar el pedido?")){
@@ -120,7 +170,7 @@ function cancelar(idce){
             data: dataToSend,
             type: 'json',
             success: function(data){
-                toastr.success('Pedido cancelado');
+                toastr.success('Pedido cancelado!');
             }
         });
     }
