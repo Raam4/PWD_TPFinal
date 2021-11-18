@@ -42,14 +42,17 @@ include_once("../estructura/header.php");
         var currentRow = $(this).closest("tr");
         var nom = currentRow.find("td:eq(1)").html();
         var mail = currentRow.find("td:eq(2)").html();
-
-        if (nom != '' && mail != '') {
+        var tel = currentRow.find("td:eq(3)").html();
+        var pass = currentRow.find("td:eq(4)").html();
+        if (nom != '' && mail != '' && tel != '' && pass != '') {
             $.ajax({
                 method: 'post',
                 url: '../accion/admin/accionAltaUs.php',
                 data: {
                     'usnombre': nom,
-                    'usmail': mail
+                    'usmail': mail,
+                    'ustelefono':tel,
+                    'uspass':pass
                 },
                 type: 'json',
                 success: function(data) {
@@ -90,6 +93,7 @@ include_once("../estructura/header.php");
 
         currentRow.find("td:eq(1)").attr('contenteditable', true);
         currentRow.find("td:eq(2)").attr('contenteditable', true);
+        currentRow.find("td:eq(3)").attr('contenteditable', true);
         currentRow.find("td:eq(1)").focus();
 
         controlButton(col1, 1);
@@ -98,13 +102,14 @@ include_once("../estructura/header.php");
         // controlar no-accion si no se modifico nada
             currentRow.find("td:eq(1)").attr('contenteditable', false);
             currentRow.find("td:eq(2)").attr('contenteditable', false);
+            currentRow.find("td:eq(3)").attr('contenteditable', false);
 
             var dataF = {
                 "idusuario": currentRow.find("td:eq(0)").html(),
                 "usnombre": currentRow.find("td:eq(1)").html(),
-                "usmail": currentRow.find("td:eq(2)").html()
+                "usmail": currentRow.find("td:eq(2)").html(),
+                "ustelefono": currentRow.find("td:eq(3)").html()
             };
-            controlButton(col1, 0);
             editar(dataF);
         })
 
@@ -117,12 +122,7 @@ include_once("../estructura/header.php");
             $('#confirm' + id).show();
             $('#cancel' + id).show();
         } else {
-            // $('td').attr('contenteditable', false);
-            $('#editarUs'+id).show();
-            $('#borrarUs' + id).show();
-            $('#gestion' + id).show();
-            $('#confirm' + id).hide();
-            $('#cancel' + id).hide();
+            $("#salida").load('../accion/admin/accionListarUsuarios.php');
         }
     }
 

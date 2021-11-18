@@ -20,7 +20,7 @@ include_once("../estructura/header.php");
                     <!-- <a href="Index.php" class="h1"><b>Carrito</b></a> -->
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg h5">Registro de nuevo usuario</p>
+                    <p class="login-box-msg h5" style="color: #ddaa44ff;">Registro de nuevo usuario</p>
                     <form id="registro" name="registro" class="mb-2" method="post">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Nombre de usuario" id="usnombre" name="usnombre">
