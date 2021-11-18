@@ -24,7 +24,7 @@ if (count($colUsuarios) > 0) {
     <td contenteditable class='coledit' ></td>
     <td contenteditable class='coledit' ></td>
     <td><i class='fa fa-check'></i></td>
-    <td><button id='altaUs' class='btn btn-info'><i class='fa fa-plus'></i> Crear</button></td>
+    <td><button id='altaUs' class='btn btn-info' title='Alta Usuario' ><i class='fa fa-plus'></i> </button></td>
     
     </tr>";
    foreach ($colUsuarios as $us) {
@@ -42,10 +42,10 @@ if (count($colUsuarios) > 0) {
         }
         $strhtnl.="<td>";
         if($us["usdeshabilitado"]==null){
-            $strhtnl.=" <button class='editarUs btn btn-warning' id='editarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' ><i class='fa fa-pen'></i> Editar</button>
-            <button class='btn btn-success' id='confirm".$us['idusuario']."'  style='display:none' ><i class='fa fa-check'></i> Confirmar</button>
-            <button class='btn btn-danger' id='cancel".$us['idusuario']."'  style='display:none' onclick='controlButton(".$us['idusuario'].",0)'><i class='fa fa-times'></i> Cancelar</button>
-            <button class='borrarUs btn btn-danger' id='borrarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' ><i class='fa fa-arrow-down'></i> Baja</button>"; 
+            $strhtnl.=" <button class='editarUs btn btn-warning' id='editarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' title='Editar' ><i class='fa fa-pen'></i> </button>
+            <button class='btn btn-success' id='confirm".$us['idusuario']."'  style='display:none' title='Confirmar' ><i class='fa fa-check'></i></button>
+            <button class='btn btn-danger' id='cancel".$us['idusuario']."'  style='display:none' onclick='controlButton(".$us['idusuario'].",0)' title='Cancelar'><i class='fa fa-times'></i></button>
+            <button class='borrarUs btn btn-danger' id='borrarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' title='Borrar Usuario'><i class='fa fa-arrow-down'></i></button>"; 
             //<a class='btn btn-outline-secondary' id='gestion".$us['idusuario']."' href='../accion/gestionRol.php?idusuario=".$us['idusuario']."' >Gestion rol</a>";
 
         }        

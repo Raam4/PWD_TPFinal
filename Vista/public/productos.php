@@ -25,7 +25,7 @@ closedir($fileh); // Fin lectura archivos
         </div>  
     </div>
     <div id="portfolio">
-            <div class="container-fluid p-0">
+            <div class="container-fluid p-3">
                 <div class="row g-0 m-4">
                     <?php echo $listaImg;  ?>
                 </div>

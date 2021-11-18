@@ -1,6 +1,13 @@
 <?php
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
+if(!$objSess->activa()){
+    header('location:../public/login.php');
+    exit();
+}else if($objSess->getRolActivo()['idrol']!=3){
+    header('location:../public/Index.php');
+    exit();
+}
 include_once("../estructura/header.php");
 $carrito = $objSess->getCarrito();
 $abmprod = new AbmProducto();
@@ -8,7 +15,7 @@ $abmprod = new AbmProducto();
 <div class="content-wrapper">
     <div class="card">
         <div class="card-header">
-            <h3>Carrito</h3>
+            <h3 class="txtArchBl">Carrito</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped text-center">
@@ -41,27 +48,27 @@ $abmprod = new AbmProducto();
                     ?>
                     <tr id="fila<?=$prod['idproducto']?>" class=<?=$prod['idproducto']?>>
                         <td>
-                            <h4>
+                            <h6>
                                 <?php echo $prod['pronombre']; ?>
-                            </h4>
+                            </h6>
                         </td>
                         <td>
-                            <h4>
+                            <h6>
                                 <input type="number" id="<?=$prod['idproducto']?>" name="cantidad" class="col-9 rounded-1" min="1" value="1" max="<?=$prod['procantstock']?>">
-                            </h4>
+                            </h6>
                         </td>
                         <td>
-                            <h4 id="impunit<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
+                            <h6 id="impunit<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
                                 <?php echo '$'.$prod['proprecio']; ?>
-                            </h4>
+                            </h6>
                         </td>
                         <td>
-                            <h4 id="imptot<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
+                            <h6 id="imptot<?=$prod['idproducto']?>" class="<?=$prod['proprecio']?>">
                                 <?php echo '$'.$prod['proprecio'];?>
-                            </h4>
+                            </h6>
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-md" type="button" onclick="quitar($('#fila<?=$prod['idproducto']?>'))">
+                            <button class="btn btn-outline-danger btn-md" type="button" onclick="quitar($('#fila<?=$prod['idproducto']?>'))">
                                 <i class="fas fa-times"></i> Quitar
                             </button>
                         </td>
@@ -70,18 +77,18 @@ $abmprod = new AbmProducto();
                 </tbody>
                 <tfoot>
                     <td colspan="2">
-                        <h3>Total del pedido</h3>
+                        <h6>Total del pedido</h6>
                     </td>
                     <td colspan="1">
-                        <h3 id="totcar" class="<?=$total?>">
+                        <h6 id="totcar" class="<?=$total?>">
                             <?php echo '$'.$total?>
-                        </h3>
+                        </h6>
                     </td>
                     <td colspan="2">
-                        <button class="btn btn-success btn-md" type="button" onclick="finalizar()">
-                            <i class="fas fa-shopping-cart"></i> Finalizar pedido
+                        <button class="btn btn-outline-success btn-md" type="button" onclick="finalizar()">
+                            <i class="fas fa-shopping-cart"></i> Finalizar
                         </button>
-                        <button class="btn btn-danger btn-md" type="button" onclick="vaciar()">
+                        <button class="btn btn-outline-danger btn-md" type="button" onclick="vaciar()">
                             <i class="fas fa-trash"></i> Vaciar
                         </button>
                     </td>
@@ -146,7 +153,7 @@ $abmprod = new AbmProducto();
     <div class="modal-dialog">
         <div class="modal-content bg-success" id="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Pedido realizado</h4>
+                <h4 class="modal-title text-white">Pedido realizado</h4>
             </div>
             <div class="modal-body">
                 <p id="modalMsg">El pedido fue cargado con éxito.

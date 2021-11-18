@@ -1,6 +1,13 @@
 <?php
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
+if(!$objSess->activa()){
+    header('location:../public/login.php');
+    exit();
+}else if($objSess->getRolActivo()['idrol']!=3){
+    header('location:../public/Index.php');
+    exit();
+}
 include_once("../estructura/header.php");
 $carroEnCarga = $objSess->getCarrito();
 ?>
@@ -13,18 +20,18 @@ $carroEnCarga = $objSess->getCarrito();
             </div>
             <div class="carousel-inner">
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
-
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
+                <!-- <img class="bd-placeholder-img" src="../css/img/slider1.png" alt=""> -->
                 <div class="container">
                 <div class="carousel-caption text-start">
                     <h1>Example headline.</h1>
-                    <p>Some representative placeholder content for the first slide of the carousel.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                    <p>Escribinos un whatsapp y pedí nuestra lista de productos, hay combos de todo tipo para salvar tus juntadas</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Contactanos</a></p>
                 </div>
                 </div>
             </div>
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
 
                 <div class="container">
                 <div class="carousel-caption">
@@ -35,10 +42,10 @@ $carroEnCarga = $objSess->getCarrito();
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#EAEAEA"></rect></svg>
 
-                <div class="container">
-                <div class="carousel-caption text-end">
+                <div class="container" >
+                <div class="carousel-caption text-end" >
                     <h1>One more for good measure.</h1>
                     <p>Some representative placeholder content for the third slide of this carousel.</p>
                     <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
@@ -58,7 +65,7 @@ $carroEnCarga = $objSess->getCarrito();
     
     <div class="row ms-1">
         <div class="col-md-3">
-            <div class="card sticky-top">
+            <div class="card sticky-top mx-3">
                 <div class="card-body">
                     <div id='filtros'>
                         <h3>Filtros</h3>
@@ -69,7 +76,7 @@ $carroEnCarga = $objSess->getCarrito();
                                     $desc = $rubro['runombre'];
                             ?>
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input custom-control-input-danger" type="checkbox" value="<?php echo $rubro['idrubro'];?>" id="<?php echo $desc;?>" checked>
+                                <input class="custom-control-input custom-control-input-warning" type="checkbox" value="<?php echo $rubro['idrubro'];?>" id="<?php echo $desc;?>" checked>
                                 <label for="<?php echo $desc;?>" class="custom-control-label"><?php echo $desc;?></label>
                             </div>
                         <?php }?>
@@ -84,10 +91,11 @@ $carroEnCarga = $objSess->getCarrito();
                 <?php
                     $abmprod = new AbmProducto();
                     foreach($abmprod->buscar(array()) as $producto){
+                        $rutaimg="../../files/";
                 ?>
                 <div class="col-md-4 <?=$producto['idrubro'];?>">
                     <div class="card">
-                        <img class="card-img-top" src="https://media.discordapp.net/attachments/883712984902434836/908035385957965874/unknown.png?width=523&amp;height=418">
+                        <img class="card-img-top"  src="<?php echo $rutaimg.$producto['pronombre'].$producto['idproducto'].".jpg"  ?> ">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -95,7 +103,7 @@ $carroEnCarga = $objSess->getCarrito();
                                     <p><?php echo $producto['prodetalle'];?></p>
                                 </div>
                                 <div class="col-md-6 text-end">
-                                    <h1>$<?php echo $producto['proprecio'];?></h1>
+                                    <h5>$<?php echo $producto['proprecio'];?></h5>
                                     <br>
                                     <div id="btns<?=$producto['idproducto'];?>">
                                         <?php

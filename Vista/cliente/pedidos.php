@@ -1,6 +1,13 @@
 <?php
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
+if(!$objSess->activa()){
+    header('location:../public/login.php');
+    exit();
+}else if($objSess->getRolActivo()['idrol']!=3){
+    header('location:../public/Index.php');
+    exit();
+}
 include_once("../estructura/header.php");
 $carrito = $objSess->getCarrito();
 $abmproducto = new AbmProducto();
@@ -25,13 +32,17 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
     <?php
     if(!$compras){
     ?>
-    <h1>No posee pedidos</h1>
+    <div class="card">
+    <div class="card-header">
+            <h4 class="txtArchBl">Aun no posee pedidos</h4>
+        </div>
+    </div>
     <?php
     }else{
     ?>
     <div class="card">
         <div class="card-header">
-            <h3>Pedidos</h3>
+            <h3 class="txtArchBl">Pedidos</h3>
         </div>
         <div class="card-body">
             <table class="table table-striped text-center">
@@ -94,7 +105,7 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
                         <?php
                         $dis = $estadotipo[0]['idcompraestadotipo'] != 1 ? 'disabled' : '';
                         ?>
-                        <button class="btn btn-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
+                        <button class="btn btn-outline-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
                             <i class="fas fa-times"></i> Cancelar
                         </button>
                     </td>

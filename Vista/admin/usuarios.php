@@ -110,6 +110,7 @@ include_once("../estructura/header.php");
             $('#confirm' + id).show();
             $('#cancel' + id).show();
         } else {
+            $('td').attr('contenteditable', false);
             $('#editarUs'+id).show();
             $('#borrarUs' + id).show();
             $('#gestion' + id).show();
