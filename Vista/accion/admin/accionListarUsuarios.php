@@ -50,7 +50,7 @@ if (count($colUsuarios) > 0) {
 
         }        
         if($us["usdeshabilitado"]!=null){
-            $strhtnl.="<button class='btn btn-success' id='habilUs' data-id='".$us['idusuario'] ."' ><i class='fa fa-arrow-up'></i>  Alta</button> ";
+            $strhtnl.="<button class='btn btn-success' id='habilUs' data-id='".$us['idusuario'] ."' title='Habilitar' ><i class='fa fa-arrow-up'></i> </button> ";
         }       
  
 }

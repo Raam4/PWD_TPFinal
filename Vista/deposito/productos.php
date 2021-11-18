@@ -64,18 +64,16 @@ $productos = $abmprod->buscar(array());
                             <?php echo $item['prodetalle']; ?>
                         </td>
                         <td>
-                            <button id="editar" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)">
-                                <i class="fas fa-pen"></i> Editar
-                            </button>
-                            <button id="borrar" class="btn btn-danger btn-sm" type="button" onclick="borrar(<?=$id?>)">
-                                <i class="fas fa-trash"></i> Eliminar
-                            </button>
+                            <button id="editar" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
+                                <i class="fas fa-pen"></i> </button>
+                            <button id="borrar" class="btn btn-danger btn-sm" type="button" onclick="borrar(<?=$id?>)" title='Borrar'>
+                                <i class="fas fa-trash"></i> </button>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
                 <tfoot>
-                    <td colspan="7"><button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus"></i>Añadir</button>
+                    <td colspan="7"><button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus" title='Alta Producto'></i> Alta</button>
                 </tfoot>
             </table>
         </div>
@@ -127,8 +125,8 @@ $productos = $abmprod->buscar(array());
                     </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="reset" class="btn btn-outline-light" onclick="$('#modal').modal('hide')">Close</button>
-              <button type="submit" class="btn btn-outline-light">Save changes</button>
+              <button type="reset" class="btn btn-outline-light" onclick="$('#modal').modal('hide')">Cancelar</button>
+              <button type="submit" class="btn btn-outline-light">Guardar</button>
             </form>
             </div>
         </div>
