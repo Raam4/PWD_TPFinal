@@ -13,6 +13,19 @@ $carrito = $objSess->getCarrito();
 $abmprod = new AbmProducto();
 ?>
 <div class="content-wrapper">
+    <?php
+    if(!$carrito){
+    ?>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="alert alert alert-dismissible mt-5 text-center" style="background-color: #ddaa44;">
+                    <h3><i class="icon fas fa-info"></i> Vacío</h3>
+                        <h5>Aún no se han cargado productos.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php }else{ ?>
     <div class="card">
         <div class="card-header">
             <h3 class="txtArchBl">Carrito</h3>
@@ -227,4 +240,4 @@ $abmprod = new AbmProducto();
         });
     }
 </script>
-<?php include_once("../estructura/footer.php");?>
+<?php } include_once("../estructura/footer.php");?>

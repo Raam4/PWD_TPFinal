@@ -31,7 +31,7 @@ closedir($fileh); // Fin lectura archivos
                 </div>
             </div>
         </div>
-   
+    </div>
 </div>
 <?php
 include_once("../estructura/footer.php");

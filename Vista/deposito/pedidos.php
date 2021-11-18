@@ -25,7 +25,14 @@ $compras = $abmcompra->buscar(array());
     <?php
     if(!$compras){
     ?>
-    <h1>No existen pedidos</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="alert alert alert-dismissible mt-5 text-center" style="background-color: #ddaa44;">
+                <h3><i class="icon fas fa-info"></i> Vacío</h3>
+                    <h5>Aún no se han cargado pedidos.</h5>
+            </div>
+        </div>
+    </div>
     <?php
     }else{
     ?>

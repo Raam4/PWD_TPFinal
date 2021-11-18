@@ -32,9 +32,12 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
     <?php
     if(!$compras){
     ?>
-    <div class="card">
-    <div class="card-header">
-            <h4 class="txtArchBl">Aun no posee pedidos</h4>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="alert alert alert-dismissible mt-5 text-center" style="background-color: #ddaa44;">
+                <h3><i class="icon fas fa-info"></i> Vacío</h3>
+                    <h5>Aún no posee pedidos.</h5>
+            </div>
         </div>
     </div>
     <?php
