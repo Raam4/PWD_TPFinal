@@ -1,12 +1,5 @@
 <?php
 include_once("../../configuracion.php");
-$data = data_submitted();
-$abmrol = new AbmRol();
-// $objSess = new Session();
-// if(!$objSess->activa()) {
-//     $perfil = Maker::perfil(null);
-//     $menu = Maker::menu(['idrol'=>4]);
-// }
 include_once("../../Utiles/sessmanager.php");
 include_once("../estructura/header.php");
 ?>
