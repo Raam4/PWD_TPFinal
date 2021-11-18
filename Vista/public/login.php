@@ -53,7 +53,7 @@ include_once("../estructura/header.php");
                             <a href="#" >Olvidé mi contraseña</a>
                         </p>
                         <p class="mb-0">
-                            <a href="registro.php" id="lgReg">Quiero registrarme</a>
+                            <a href="registro.php" class="lgReg">Quiero registrarme</a>
                         </p>
                     </div>
                 </div>

@@ -15,12 +15,12 @@ include_once("../estructura/header.php");
 <div class="content-wrapper">
     <div class="row justify-content-center py-5">
         <div class="login-box">
-            <div class="card card-outline card-primary">
+            <div class="card card-outline card-warning">
                 <div class="card-header text-center">
-                    <a href="Index.php" class="h1"><b>Carrito</b></a>
+                    <!-- <a href="Index.php" class="h1"><b>Carrito</b></a> -->
                 </div>
                 <div class="card-body">
-                    <p class="login-box-msg">Registro de nuevo usuario</p>
+                    <p class="login-box-msg h5">Registro de nuevo usuario</p>
                     <form id="registro" name="registro" class="mb-2" method="post">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Nombre de usuario" id="usnombre" name="usnombre">
@@ -76,11 +76,11 @@ include_once("../estructura/header.php");
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-primary btn-block">Registrarme</button>
+                                <button type="submit" class="btn btn-outline-primary btn-block">Registrarme</button>
                             </div>
                         </div>
                     </form>
-                    <a href="login.php" class="text-center">Ya estoy registrado</a>
+                    <a href="login.php" class="lgReg">Ya estoy registrado</a>
                 </div>
             </div>
         </div>
