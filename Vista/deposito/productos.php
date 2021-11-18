@@ -139,7 +139,7 @@ $productos = $abmprod->buscar(array());
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/accionProdStock.php',
+            url: '../accion/deposito/accionProdStock.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
@@ -159,7 +159,7 @@ $productos = $abmprod->buscar(array());
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/accionBorrarStock.php',
+            url: '../accion/deposito/accionBorrarStock.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
@@ -173,7 +173,7 @@ $productos = $abmprod->buscar(array());
             var dataToSend = $(this).serialize();
             $.ajax({
                 method: 'post',
-                url: '../accion/accionSaveStock.php',
+                url: '../accion/deposito/accionSaveStock.php',
                 data: dataToSend,
                 type: 'json',
                 success: function(){

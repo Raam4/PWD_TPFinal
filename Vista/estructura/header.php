@@ -51,7 +51,7 @@
         if($objSess->activa()){
           echo '
             <div class="sidebar-custom">
-            <a href="../accion/cerrarSesion.php" class="link-danger hide-on-collapse pos-right m-0" id="cerrarSess" >Cerrar sesion</a>
+            <a href="../accion/public/cerrarSesion.php" class="link-danger hide-on-collapse pos-right m-0" id="cerrarSess" >Cerrar sesion</a>
             </div>';
         }
         ?>

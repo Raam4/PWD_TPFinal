@@ -178,7 +178,7 @@ $abmprod = new AbmProducto();
         var data = {'idproducto' : fila.attr('class')};
         $.ajax({
             method: 'POST',
-            url: '../accion/accionCarQuitar.php',
+            url: '../accion/cliente/accionCarQuitar.php',
             data: data,
             type: 'json',
             success: function(){
@@ -209,7 +209,7 @@ $abmprod = new AbmProducto();
         console.log(data);
         $.ajax({
             method: 'POST',
-            url: '../accion/accionFinPedido.php',
+            url: '../accion/cliente/accionFinPedido.php',
             data: {'arreglo' : data},
             type: 'json',
             success: function(ret){
