@@ -142,6 +142,31 @@ include_once("../estructura/header.php");
         })
         console.log(dataF);
     }
+    
+
+    $(document).on("click", "#habilUs", function() {
+        var id = $(this).data("id");
+        $.ajax({
+            method: 'post',
+            url: '../accion/admin/accionHabilitarUs.php',
+            data: {
+                'idusuario': id,
+            },
+            type: 'json',
+            success: function(data) {
+                $("#salida").load('../accion/admin/accionListarUsuarios.php');
+            },
+            error: function(data) {
+                alert("error");
+            }
+        })
+    });
+
+    function cerrarDlg() {
+        // event.preventDefault();
+        // $("#fm")[0].reset();
+        $(dlg).hide();
+    }
     // $(document).on("click", "#editarUs", function() {
     //     var currentRow = $(this).closest("tr");
     //     var col1 = currentRow.find("td:eq(0)").html();
@@ -188,29 +213,5 @@ include_once("../estructura/header.php");
     //         });
     //     });
     // });
-
-    $(document).on("click", "#habilUs", function() {
-        var id = $(this).data("id");
-        $.ajax({
-            method: 'post',
-            url: '../accion/admin/accionHabilitarUs.php',
-            data: {
-                'idusuario': id,
-            },
-            type: 'json',
-            success: function(data) {
-                $("#salida").load('../accion/admin/accionListarUsuarios.php');
-            },
-            error: function(data) {
-                alert("error");
-            }
-        })
-    });
-
-    function cerrarDlg() {
-        // event.preventDefault();
-        // $("#fm")[0].reset();
-        $(dlg).hide();
-    }
 </script>
 <?php include_once('../estructura/footer.php'); ?>
