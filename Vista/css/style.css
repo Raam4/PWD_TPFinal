@@ -7,7 +7,7 @@ body, .content-wrapper{font-family:Arial, Helvetica, sans-serif}
 
 #titleInd{font-size: 50px;}
 
-#wrapM li{color: rgb(173, 126, 30);}
+#wrapM li, .descP{color: rgb(173, 126, 30);}
 
 .nav-item p,section p{color: rgb(187, 138, 40);}
 

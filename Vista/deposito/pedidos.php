@@ -34,7 +34,7 @@ $compras = $abmcompra->buscar(array());
             <h3>Pedidos</h3>
         </div>
         <div class="card-body">
-            <table class="table table-striped text-center">
+            <table class="table  text-center">
                 <thead>
                     <tr>
                         <th style="width: 10%">
@@ -101,12 +101,12 @@ $compras = $abmcompra->buscar(array());
                         <?php
                         if($estadotipo[0]['idcompraestadotipo'] == 1){
                         ?>
-                        <button class="btn btn-info btn-sm" type="button" onclick="aceptar(<?=$idce?>)">
+                        <button class="btn btn-outline-info btn-sm mb-1" type="button" onclick="aceptar(<?=$idce?>)">
                             <i class="fas fa-check"></i> Aceptar
                         </button>
                         <?php }
                         if($estadotipo[0]['idcompraestadotipo'] == 2){?>
-                        <button class="btn btn-success btn-sm" type="button" onclick="enviar(<?=$idce?>)">
+                        <button class="btn btn-outline-success btn-sm" type="button" onclick="enviar(<?=$idce?>)">
                             <i class="fas fa-paper-plane"></i> Enviar
                         </button>
                         <?php }
@@ -115,7 +115,7 @@ $compras = $abmcompra->buscar(array());
                             $dis = 'disabled';
                         }
                         ?>
-                        <button class="btn btn-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
+                        <button class="btn btn-outline-danger btn-sm mt-1" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
                             <i class="fas fa-times"></i> Cancelar
                         </button>
                     </td>
