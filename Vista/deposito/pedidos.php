@@ -49,78 +49,71 @@ $compras = $abmcompra->buscar(array());
                         <th style="width: 20%">
                             Productos
                         </th>
-                        <th style="width: 15%">
+                        <th style="width: 10%">
                             Importe total
                         </th>
                         <th style="width: 10%">
                             Estado
                         </th>
-                        <th style="width: 20%">
+                        <th style="width: 25%">
                             Acciones
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    foreach($compras as $pedido){
-                        $id = $pedido['idcompra'];
-                        $usuario = $abmuser->buscar(['idusuario' => $pedido['idusuario']]);
-                        $compraitem = $abmcompraitem->buscar(['idcompra' => $id]);
-                        $compraestado = $abmcompraestado->buscar(['idcompra' => $id]);
-                        $idce = $compraestado[0]['idcompraestadotipo'];
-                        $estadotipo = $abmcompraestadotipo->buscar(['idcompraestadotipo' => $idce]);
-                        $total = 0;
-                    ?>
-                    <td>
-                        <?=$id?>
-                    </td>
-                    <td>
-                        <?=$usuario[0]['usnombre']?>
-                    </td>
-                    <td>
-                        <?=$pedido['cofecha']?>
-                    </td>
-                    <td>
+                    <tr>
                         <?php
-                        $strprod = "";
-                        foreach($compraitem as $item){
-                            $prod = $abmproducto->buscar(['idproducto' => $item['idproducto']]);
-                            $total += $item['citotal'];
-                            $strprod .= $prod[0]['pronombre']." x".$item['cicantidad']." <br> ";
-                        }?>
-                        <button type="button" class="btn btn-sm btn-warning" data-bs-placement="bottom" data-bs-trigger="focus"
-                        data-bs-toggle="popover" title="Productos" data-bs-html="true" data-bs-content="<?=$strprod?>">Click para ver productos</button>
-                    </td>
-                    <td>
-                        <?=$total?>
-                    </td>
-                    <td>
-                        <?=$estadotipo[0]['cetdescripcion']?>
-                    </td>
-                    <td>
-                        <?php
-                        if($estadotipo[0]['idcompraestadotipo'] == 1){
+                        foreach($compras as $pedido){
+                            $id = $pedido['idcompra'];
+                            $usuario = $abmuser->buscar(['idusuario' => $pedido['idusuario']]);
+                            $compraitem = $abmcompraitem->buscar(['idcompra' => $id]);
+                            $compraestado = $abmcompraestado->buscar(['idcompra' => $id]);
+                            $idce = $compraestado[0]['idcompraestado'];
+                            $idcet = $compraestado[0]['idcompraestadotipo'];
+                            $estadotipo = $abmcompraestadotipo->buscar(['idcompraestadotipo' => $idcet]);
+                            $total = 0;
                         ?>
-                        <button class="btn btn-outline-info btn-sm mb-1" type="button" onclick="aceptar(<?=$idce?>)">
-                            <i class="fas fa-check"></i> Aceptar
-                        </button>
-                        <?php }
-                        if($estadotipo[0]['idcompraestadotipo'] == 2){?>
-                        <button class="btn btn-outline-success btn-sm" type="button" onclick="enviar(<?=$idce?>)">
-                            <i class="fas fa-paper-plane"></i> Enviar
-                        </button>
-                        <?php }
-                        $dis = '';
-                        if($estadotipo[0]['idcompraestadotipo'] == 3 || $estadotipo[0]['idcompraestadotipo'] == 4){
-                            $dis = 'disabled';
-                        }
-                        ?>
-                        <button class="btn btn-outline-danger btn-sm mt-1" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                    </td>
+                        <td>
+                            <?=$id?>
+                        </td>
+                        <td>
+                            <?=$usuario[0]['usnombre']?>
+                        </td>
+                        <td>
+                            <?=$pedido['cofecha']?>
+                        </td>
+                        <td>
+                            <?php
+                            $strprod = "";
+                            foreach($compraitem as $item){
+                                $prod = $abmproducto->buscar(['idproducto' => $item['idproducto']]);
+                                $total += $item['citotal'];
+                                $strprod .= $prod[0]['pronombre']." x".$item['cicantidad']." <br> ";
+                            }?>
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-placement="bottom" data-bs-trigger="focus"
+                            data-bs-toggle="popover" title="Productos" data-bs-html="true" data-bs-content="<?=$strprod?>">Click para ver productos</button>
+                        </td>
+                        <td>
+                            <?=$total?>
+                        </td>
+                        <td id="colestado<?=$idce?>">
+                            <?=$estadotipo[0]['cetdescripcion']?>
+                        </td>
+                        <td id="<?=$idce?>" class="btnacciones">
+                            <input type="hidden" id="estado<?=$idce?>" value="<?=$idcet?>">
+                            <button class="btn btn-outline-info btn-sm" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
+                                <i class="fas fa-check"></i> Aceptar
+                            </button>
+                            <button class="btn btn-outline-success btn-sm" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
+                                <i class="fas fa-paper-plane"></i> Enviar
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </td>
+                    </tr>
+                    <?php } ?>
                 </tbody>
-                <?php } ?>
             </table>
     <?php
     }
@@ -132,10 +125,32 @@ $compras = $abmcompra->buscar(array());
 <script>
 $(document).ready(function(){
     $('[data-bs-toggle="popover"]').popover();
+    $('.btnacciones').each(function(){
+        var id = $(this).attr('id');
+        var estado = $('#estado'+id).val();
+        if(estado == 1){
+            $('#ace'+id).removeAttr('disabled');
+            $('#env'+id).hide();
+            $('#can'+id).removeAttr('disabled');
+        }
+        if(estado == 2){
+            $('#ace'+id).hide();
+            $('#env'+id).removeAttr('disabled');
+            $('#can'+id).removeAttr('disabled');
+        }
+        if(estado == 3 || estado == 4){
+            $('#ace'+id).hide();
+            $('#env'+id).hide();
+        }
+    });
 });
 function aceptar(idce){
     var dataToSend = {'idcompraestado' : idce};
     if(confirm("Desea aceptar el pedido?")){
+        $('#ace'+idce).hide();
+        $('#env'+idce).removeAttr('disabled');
+        $('#env'+idce).show();
+        $('#colestado'+idce).text('Aceptado');
         $.ajax({
             method: 'post',
             url: '../accion/deposito/accionAceptaCompra.php',
@@ -150,6 +165,9 @@ function aceptar(idce){
 function enviar(idce){
     var dataToSend = {'idcompraestado' : idce};
     if(confirm("Desea enviar el pedido?")){
+        $('#env'+idce).hide();
+        $('#can'+idce).attr('disabled', true);
+        $('#colestado'+idce).text('Enviado');
         $.ajax({
             method: 'post',
             url: '../accion/deposito/accionEnviaCompra.php',
@@ -164,6 +182,10 @@ function enviar(idce){
 function cancelar(idce){
     var dataToSend = {'idcompraestado' : idce};
     if(confirm("Desea cancelar el pedido?")){
+        $('#ace'+idce).hide();
+        $('#env'+idce).hide();
+        $('#can'+idce).attr('disabled', true);
+        $('#colestado'+idce).text('Cancelado');
         $.ajax({
             method: 'post',
             url: '../accion/cliente/accionCancelaCompra.php',

@@ -69,48 +69,49 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
                     <?php
                     foreach($compras as $pedido){
                         $id = $pedido['idcompra'];
                         $compraitem = $abmcompraitem->buscar(['idcompra' => $id]);
                         $compraestado = $abmcompraestado->buscar(['idcompra' => $id]);
-                        $idce = $compraestado[0]['idcompraestadotipo'];
-                        $estadotipo = $abmcompraestadotipo->buscar(['idcompraestadotipo' => $idce]);
+                        $idce = $compraestado[0]['idcompraestado'];
+                        $idcet = $compraestado[0]['idcompraestadotipo'];
+                        $estadotipo = $abmcompraestadotipo->buscar(['idcompraestadotipo' => $idcet]);
                         $total = 0;
                     ?>
-                    <td>
-                        <?=$id?>
-                    </td>
-                    <td>
-                        <?=$pedido['cofecha']?>
-                    </td>
-                    <td>
-                        <?php
-                        $strprod = "";
-                        foreach($compraitem as $item){
-                            $prod = $abmproducto->buscar(['idproducto' => $item['idproducto']]);
-                            $total += $item['citotal'];
-                            $strprod .= $prod[0]['pronombre']." x".$item['cicantidad']." <br> ";
-                        }?>
-                        <button type="button" class="btn btn-sm btn-warning" data-bs-placement="bottom" data-bs-trigger="focus"
-                        data-bs-toggle="popover" title="Productos" data-bs-html="true" data-bs-content="<?=$strprod?>">Click para ver productos</button>
-                    </td>
-                    <td>
-                        <?=$total?>
-                    </td>
-                    <td>
-                        <?=$estadotipo[0]['cetdescripcion']?>
-                    </td>
-                    <td>
-                        <?php
-                        $dis = $estadotipo[0]['idcompraestadotipo'] != 1 ? 'disabled' : '';
-                        ?>
-                        <button class="btn btn-outline-danger btn-sm" type="button" <?=$dis?> onclick="cancelar(<?=$idce?>)">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                    </td>
+                        <td>
+                            <?=$id?>
+                        </td>
+                        <td>
+                            <?=$pedido['cofecha']?>
+                        </td>
+                        <td>
+                            <?php
+                            $strprod = "";
+                            foreach($compraitem as $item){
+                                $prod = $abmproducto->buscar(['idproducto' => $item['idproducto']]);
+                                $total += $item['citotal'];
+                                $strprod .= $prod[0]['pronombre']." x".$item['cicantidad']." <br> ";
+                            }?>
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-placement="bottom" data-bs-trigger="focus"
+                            data-bs-toggle="popover" title="Productos" data-bs-html="true" data-bs-content="<?=$strprod?>">Click para ver productos</button>
+                        </td>
+                        <td>
+                            <?=$total?>
+                        </td>
+                        <td id="colestado<?=$idce?>">
+                            <?=$estadotipo[0]['cetdescripcion']?>
+                        </td>
+                        <td id="<?=$idce?>" class="btnacciones">
+                            <input type="hidden" id="estado<?=$idce?>" value="<?=$idcet?>">
+                            <button class="btn btn-outline-danger btn-sm" id='btn<?=$idce?>' type="button" onclick="cancelar(<?=$idce?>)">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </td>
+                    </tr>
+                    <?php } ?>
                 </tbody>
-                <?php } ?>
             </table>
     <?php
     }
@@ -122,10 +123,19 @@ $compras = $abmcompra->buscar(['idusuario' => $usuario['idusuario']]);
 <script>
 $(document).ready(function(){
     $('[data-bs-toggle="popover"]').popover();
+    $('.btnacciones').each(function(){
+        var id = $(this).attr('id');
+        var estado = $('#estado'+id).val();
+        if(estado != 1){
+            $('#btn'+id).attr('disabled', true);
+        }
+    });
 });
 function cancelar(idce){
     var dataToSend = {'idcompraestado' : idce};
     if(confirm("Desea cancelar el pedido?")){
+        $('#btn'+idce).attr('disabled', true);
+        $('#colestado'+idce).text('Cancelada');
         $.ajax({
             method: 'post',
             url: '../accion/cliente/accionCancelaCompra.php',
