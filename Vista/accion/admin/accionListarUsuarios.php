@@ -44,9 +44,9 @@ if (count($colUsuarios) > 0) {
         if($us["usdeshabilitado"]==null){
             $strhtnl.=" <button class='editarUs btn btn-warning' id='editarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' title='Editar' ><i class='fa fa-pen'></i> </button>
             <button class='btn btn-success' id='confirm".$us['idusuario']."'  style='display:none' title='Confirmar' ><i class='fa fa-check'></i></button>
-            <button class='btn btn-danger' id='cancel".$us['idusuario']."'  style='display:none' onclick='controlButton(".$us['idusuario'].",0)' title='Cancelar'><i class='fa fa-times'></i></button>
-            <button class='borrarUs btn btn-danger' id='borrarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' title='Borrar Usuario'><i class='fa fa-arrow-down'></i></button>"; 
-            //<a class='btn btn-outline-secondary' id='gestion".$us['idusuario']."' href='../accion/gestionRol.php?idusuario=".$us['idusuario']."' >Gestion rol</a>";
+            <button class='btn btn-danger mx-2' id='cancel".$us['idusuario']."'  style='display:none' onclick='controlButton(".$us['idusuario'].",0)' title='Cancelar'><i class='fa fa-times'></i></button>
+            <button class='borrarUs btn btn-danger' id='borrarUs".$us['idusuario']."' data-id='".$us['idusuario'] ."' title='Borrar Usuario'><i class='fa fa-arrow-down'> </i></button>"; 
+            //<a class='btn btn-secondary' id='gestion".$us['idusuario']."' href='../accion/gestionRol.php?idusuario=".$us['idusuario']."' >Gestion rol</a>";
 
         }        
         if($us["usdeshabilitado"]!=null){
