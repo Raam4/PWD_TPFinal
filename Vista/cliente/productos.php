@@ -91,7 +91,7 @@ $carroEnCarga = $objSess->getCarrito();
                 <?php
                     $abmprod = new AbmProducto();
                     foreach($abmprod->buscar(array()) as $producto){
-                        $rutaimg="../../files/";
+                        $rutaimg="../../files/prods";
                 ?>
                 <div class="col-md-4 <?=$producto['idrubro'];?>">
                     <div class="card">

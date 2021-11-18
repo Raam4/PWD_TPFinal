@@ -19,59 +19,43 @@ include_once("../estructura/header.php");
                     <div class="row">
                         <div class="col-md-3">
                             <div class="text-center">
-                                <img src="#" class="avatar img-circle img-thumbnail" alt="avatar">
+                                <img id="avatar" src="#" class="avatar img-circle img-thumbnail" alt="avatar">
                                 <h6>Upload a different photo...</h6>
-                                <input type="file" class="form-control">
+                                <input type="file" id="usimg" name="usimg" class="form-control">
                             </div>
                         </div>
                     <!-- edit form column -->
                     <div class="col-md-9 personal-info">
-                        <div class="alert alert-info alert-dismissable">
-                            <a class="panel-close close" data-dismiss="alert">×</a> 
-                            <i class="fa fa-coffee"></i>
-                            This is an <strong>.alert</strong>. Use this to show important messages to the user.
-                        </div>
-                        <h3>Personal info</h3>
-                        <form class="form-horizontal" role="form">
+                        <form id="misDatos" class="form-horizontal" role="form">
+                            <input type="hidden" id="idusuario" name="idusuario" value="<?=$param['user']['idusuario']?>">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">First name:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="text" value="dey-dey">
+                                <label class="col-lg-3 control-label">Nombre de Usuario</label>
+                                <div class="col-lg-7">
+                                    <input class="form-control" id="usnombre" name="usnombre" type="text" value="<?=$param['user']['usnombre']?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Last name:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="text" value="bootdey">
+                                <label class="col-lg-3 control-label">Fecha de Nacimiento</label>
+                                <div class="col-lg-7">
+                                    <input class="form-control" id="usfecnac" name="usfecnac" type="date" value="<?=$param['user']['usfecnac']?>" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">Company:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="text" value="">
+                                <label class="col-lg-3 control-label">Contraseña</label>
+                                <div class="col-lg-7">
+                                    <input class="form-control" id="uspass"  name="uspass"type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Telefono:</label>
+                                <div class="col-lg-7">
+                                    <input class="form-control" id="ustelefono" name="ustelefono" type="text" value="<?=$param['user']['ustelefono']?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email:</label>
-                                <div class="col-lg-8">
-                                    <input class="form-control" type="text" value="janesemail@gmail.com">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">Time Zone:</label>
-                                <div class="col-lg-8">
-                                    <div class="ui-select">
-                                        <select id="user_time_zone" class="form-control">
-                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                        <option value="Alaska">(GMT-09:00) Alaska</option>
-                                        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                        <option value="Arizona">(GMT-07:00) Arizona</option>
-                                        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                        </select>
-                                    </div>
+                                <div class="col-lg-7">
+                                    <input class="form-control" id="usmail" name="usmail" type="text" value="<?=$param['user']['usmail']?>">
                                 </div>
                             </div>
                         </form>
@@ -81,4 +65,44 @@ include_once("../estructura/header.php");
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function(){
+    $('form#misDatos').on('submit', function(){
+        var datos = $(this).serialize();
+        $.ajax({
+            method: 'POST',
+            url: 'accion.php',
+            data: datos,
+            type: 'json',
+            success: function(){
+
+            }
+        })
+        return false;
+    });
+    $('#usimg').on('change', function(){
+        if(confirm('Desea modificar su imagen de perfil?')){
+            var img =  $('#usimg')[0].files[0];
+            var datos = {
+                'imagen' : img,
+                'idusuario' : $('#idusuario').val(),
+                'usnombre' : $('#usnombre').val()
+            };
+            $.ajax({
+                method: 'POST',
+                url: '../accion/cliente/accionCambioImg.php',
+                data: datos,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(locimg){
+                    $('#avatar').attr('src', locimg);
+                }
+            });
+        }else{
+            $(this).val('');
+        }
+    });
+});
+</script>
 <?php include_once("../estructura/footer.php"); ?>
