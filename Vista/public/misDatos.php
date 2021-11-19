@@ -2,6 +2,7 @@
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
 include_once("../estructura/header.php");
+$nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
 ?>
 <style type="text/css">
     .avatar{
@@ -19,7 +20,7 @@ include_once("../estructura/header.php");
                     <div class="row">
                         <div class="col-md-3">
                             <div class="text-center">
-                                <img id="avatar" src="#" class="avatar img-circle img-thumbnail" alt="avatar">
+                                <img id="avatar" src="../../Utiles/findImg.php?nombre=<?=$nmimg?>" class="avatar img-circle img-thumbnail" alt="avatar">
                                 <h6>Upload a different photo...</h6>
                                 <input type="file" id="usimg" name="usimg" class="form-control">
                             </div>
@@ -82,21 +83,21 @@ $(document).ready(function(){
     });
     $('#usimg').on('change', function(){
         if(confirm('Desea modificar su imagen de perfil?')){
+            var formData = new FormData();
             var img =  $('#usimg')[0].files[0];
-            var datos = {
-                'imagen' : img,
-                'idusuario' : $('#idusuario').val(),
-                'usnombre' : $('#usnombre').val()
-            };
+            formData.append('imagen', img);
+            formData.append('idusuario', $('#idusuario').val());
+            formData.append('usnombre', $('#usnombre').val());
             $.ajax({
                 method: 'POST',
-                url: '../accion/cliente/accionCambioImg.php',
-                data: datos,
+                url: '../accion/public/accionCambioImg.php',
+                data: formData,
                 processData: false,
                 contentType: false,
                 cache: false,
                 success: function(locimg){
-                    $('#avatar').attr('src', locimg);
+                    $('#avatar').attr('src', JSON.parse(locimg));
+                    toastr.success('Imagen de perfil modificada con éxito!');
                 }
             });
         }else{

@@ -34,8 +34,8 @@ $carroEnCarga = $objSess->getCarrito();
 
                 <div class="container">
                 <div class="carousel-caption text-start">
-                    <h1 class="txtArchBl">Encuantro casual</h1>
-                    <p  class="txtArchBl"><b>Toc Toc te balca</b></p>
+                    <h1 class="txtArchBl">Encuentro casual</h1>
+                    <p  class="txtArchBl"><b>Toc Toc te banca</b></p>
                     <!-- <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p> -->
                 </div>
                 </div>
