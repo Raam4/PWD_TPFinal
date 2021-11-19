@@ -16,32 +16,27 @@ include_once("../estructura/header.php");
     <div class="row justify-content-center pt-5">
         <div class="login-box">
             <div class="card card-outline card-warning">
-                <div class="card-header text-center">
-                        <!-- <a href="Index.php" class="h2"><b>Ingreso</b></a> -->
-                </div>
-                <div class="card">
-                    <div class="card-body login-card-body">
-                        <p class="login-box-msg h4" style="color: #ddaa44ff;">Iniciar Sesión</p>
-                        <form method="POST" name="login" id="login">
-                            <input type="text" class="form-control" placeholder="Nombre de usuario" name="usnombre" id="usnombre" required>
-                            <input type="password" class="form-control mt-3" placeholder="Contraseña" name="uspass" id="uspass" required>
-                            <div class="row mt-3" id="noCred" style="display: none;">
-                                <div class="alert alert-danger py-1">
-                                    <button type="button" class="close" onclick="$('#noCred').hide();">×</button>
-                                    <p class="text-center my-1"><i class="icon fas fa-ban"></i> Credenciales incorrectas</p>
-                                </div>
+                <div class="card-body login-card-body">
+                    <p class="login-box-msg h4" style="color: #ddaa44ff;">Iniciar Sesión</p>
+                    <form method="POST" name="login" id="login">
+                        <input type="text" class="form-control" placeholder="Nombre de usuario" name="usnombre" id="usnombre" required>
+                        <input type="password" class="form-control mt-3" placeholder="Contraseña" name="uspass" id="uspass" required>
+                        <div class="row mt-3" id="noCred" style="display: none;">
+                            <div class="alert alert-danger py-1">
+                                <button type="button" class="close" onclick="$('#noCred').hide();">×</button>
+                                <p class="text-center my-1"><i class="icon fas fa-ban"></i> Credenciales incorrectas</p>
                             </div>
-                            <div class="row mt-3">
-                                    <button type="submit" class="btn btn-outline-warning btn-block">Ingresar</button>
-                            </div>
-                        </form>
-                        <p class="my-1">
-                            <a href="#" class="lgReg">Olvidé mi contraseña</a>
-                        </p>
-                        <p class="mb-0">
-                            <a href="registro.php" class="lgReg">Quiero registrarme</a>
-                        </p>
-                    </div>
+                        </div>
+                        <div class="row mt-3">
+                                <button type="submit" class="btn btn-outline-warning btn-block">Ingresar</button>
+                        </div>
+                    </form>
+                    <p class="my-1">
+                        <a href="#" class="lgReg">Olvidé mi contraseña</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="registro.php" class="lgReg">Quiero registrarme</a>
+                    </p>
                 </div>
             </div>
         </div>
