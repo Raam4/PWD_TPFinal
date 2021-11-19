@@ -23,29 +23,15 @@ include_once("../estructura/header.php");
                     <div class="card-body login-card-body">
                         <p class="login-box-msg h4" style="color: #ddaa44ff;">Iniciar Sesión</p>
                         <form method="POST" name="login" id="login">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Nombre de usuario" name="usnombre" id="usnombre">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="password" class="form-control" placeholder="Contraseña" name="uspass" id="uspass">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="noCred" style="display: none;">
+                            <input type="text" class="form-control" placeholder="Nombre de usuario" name="usnombre" id="usnombre" required>
+                            <input type="password" class="form-control mt-3" placeholder="Contraseña" name="uspass" id="uspass" required>
+                            <div class="row mt-3" id="noCred" style="display: none;">
                                 <div class="alert alert-danger py-1">
                                     <button type="button" class="close" onclick="$('#noCred').hide();">×</button>
                                     <p class="text-center my-1"><i class="icon fas fa-ban"></i> Credenciales incorrectas</p>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mt-3">
                                     <button type="submit" class="btn btn-outline-primary btn-block">Ingresar</button>
                             </div>
                         </form>
@@ -64,25 +50,35 @@ include_once("../estructura/header.php");
 <script src="../js/port_md5.js"></script>
 <script>
     $('body').ready(function () {
-        $('#login').on('submit', function () {
-            var dataToSend = {'usnombre' : $('#usnombre').val(), 'uspass' : md5($('#uspass').val())}
-            $.ajax({
-                method: 'POST',
-                url: '../accion/public/accionLogin.php',
-                data: dataToSend,
-                type: 'json',
-                success: function(data) {
-                    if(data == 'true'){
-                        $(location).attr('href','Index.php');
-                    }else{
-                        $('#noCred').show();
-                    }
+        $("#login").validate({
+            messages: {
+                usnombre: {
+                    required: "El campo es obligatorio.",
                 },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-            return false;
+                uspass: {
+                    required: "El campo es obligatorio.",
+                },
+            },
+            submitHandler: function() {
+                var dataToSend = {'usnombre' : $('#usnombre').val(), 'uspass' : md5($('#uspass').val())}
+                $.ajax({
+                    method: 'POST',
+                    url: '../accion/public/accionLogin.php',
+                    data: dataToSend,
+                    type: 'json',
+                    success: function(data) {
+                        if(data == 'true'){
+                            $(location).attr('href','Index.php');
+                        }else{
+                            $('#noCred').show();
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+                return false;
+            }
         });
     });
 </script>
