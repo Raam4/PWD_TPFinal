@@ -10,5 +10,7 @@
 <script src="../../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="../../vendor/almasaeed2010/adminlte/dist/js/adminlte.min.js"></script>
 <script src="../js/toastr.min.js"></script>
+<script src="../js/jquery/jquery.validate.js"></script>
+<script src="../js/jquery/additional-methods.js"></script>
 </body>
 </html>
