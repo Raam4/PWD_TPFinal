@@ -5,7 +5,7 @@ $respuesta = false;
 if (isset($data['menombre'])){
         $abmItm = new AbmMenu();
         $respuesta = $abmItm->alta($data);
-        if (!$respuesta){
+        if ($respuesta == ''){
             $mensaje = " La accion  ALTA No pudo concretarse";   
         }
 }

@@ -21,7 +21,8 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
                         <div class="col-md-3">
                             <div class="text-center">
                                 <img id="avatar" src="../../Utiles/findImg.php?nombre=<?=$nmimg?>" class="avatar img-circle img-thumbnail" alt="avatar">
-                                <h6>Upload a different photo...</h6>
+                                <hr>
+                                <h6>Editar foto de perfil:</h6>
                                 <input type="file" id="usimg" name="usimg" class="form-control">
                             </div>
                         </div>
@@ -90,7 +91,7 @@ $(document).ready(function(){
         })
         return false;
     });
-    $('#usimg').on('change', function(){
+    $('#usimg').on('click', function(){
         if(confirm('Desea modificar su imagen de perfil?')){
             var formData = new FormData();
             var img =  $('#usimg')[0].files[0];

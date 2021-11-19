@@ -7,17 +7,16 @@ $abmcompra = new AbmCompra();
 $abmcompraitem = new AbmCompraitem();
 $user = $sess->getUsuario();
 $compra = ['cofecha' => date('Y-m-d H:i:s'), 'idusuario' => $user['idusuario']];
-$abmcompra->alta($compra);
-$compra = $abmcompra->buscar($compra);
+$idcompra = $abmcompra->alta($compra);
 foreach($data['arreglo'] as $item){
     $prod = $abmprod->buscar(['idproducto' => $item['idproducto']]);
     $compraitem = [
         'idproducto' => $item['idproducto'],
-        'idcompra' => $compra[0]['idcompra'],
+        'idcompra' => $idcompra,
         'cicantidad' => $item['cantidad'],
         'citotal' => $prod[0]['proprecio'] * $item['cantidad']
     ];
     $abmcompraitem->alta($compraitem);
 }
-echo json_encode($compra[0]['idcompra']);
+echo json_encode($idcompra);
 ?>

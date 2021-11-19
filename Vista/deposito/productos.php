@@ -38,8 +38,11 @@ $productos = $abmprod->buscar(array());
                         <th style="width: 5%">
                             Stock
                         </th>
-                        <th style="width: 30%">
+                        <th style="width: 20%">
                             Detalle
+                        </th>
+                        <th style="width: 10%">
+                            Imagen
                         </th>
                         <th style="width: 22%">
                             Acciones
@@ -71,6 +74,11 @@ $productos = $abmprod->buscar(array());
                             <?php echo $item['prodetalle']; ?>
                         </td>
                         <td>
+                            <div class="image">
+                                <img src="../../files/prods/<?=md5($item['pronombre'].$item['idproducto'])?>.jpg" class="img-circle" style="max-width:100%;width:auto;height:auto;" alt="Imagen Producto">
+                            </div>
+                        </td>
+                        <td>
                             <button id="editar" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
                                 <i class="fas fa-pen"></i> </button>
                             <button id="borrar" class="btn btn-danger btn-sm" type="button" onclick="borrar(<?=$id?>)" title='Borrar'>
@@ -100,7 +108,7 @@ $productos = $abmprod->buscar(array());
                         <div class="col-sm-6">
                             <input class="form-control" type="text" name="pronombre" id="pronombre" placeholder="Nombre">
                         </div>
-                        <div class="col-sm-2"><label>Rubro:</label></div>
+                        <div class="col-sm-2"><label class="pt-2">Rubro:</label></div>
                         <div class="col-sm-4">
                             <select class="form-control" name="idrubro" id="idrubro">
                                 <?php
@@ -125,6 +133,12 @@ $productos = $abmprod->buscar(array());
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        <label>Imagen:</label>
+                        <div class="col-sm">
+                            <input type="file" id="imgprod" name="imgprod" class="form-control">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm">
                             <textarea class="form-control" rows='2' name="prodetalle" id="prodetalle" placeholder="Detalle"></textarea>
@@ -144,7 +158,7 @@ $productos = $abmprod->buscar(array());
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/deposito/accionProdStock.php',
+            url: '../accion/deposito/accionEditarProd.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
@@ -164,7 +178,7 @@ $productos = $abmprod->buscar(array());
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/deposito/accionBorrarStock.php',
+            url: '../accion/deposito/accionBorrarProd.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
@@ -175,17 +189,30 @@ $productos = $abmprod->buscar(array());
 
     $(document).ready(function(){
         $('#form-modal').on('submit', function(){
-            var dataToSend = $(this).serialize();
+            var formData = new FormData();
+            formData.append('pronombre', $('#pronombre').val());
+            formData.append('procantstock', $('#procantstock').val());
+            formData.append('proprecio', $('#proprecio').val());
+            formData.append('prodetalle', $('#prodetalle').val());
+            formData.append('idrubro', $('#idrubro').val());
+            if($('#idproducto').val() != ''){
+                formData.append('idproducto', $('#idproducto').val());
+            }
+            if($('#imgprod').val() != ''){
+                formData.append('imgprod', $('#imgprod')[0].files[0]);
+            }
             $.ajax({
                 method: 'post',
-                url: '../accion/deposito/accionSaveStock.php',
-                data: dataToSend,
-                type: 'json',
+                url: '../accion/deposito/accionGuardarProd.php',
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
                 success: function(){
                     $('#form-modal').off().submit();
                 }
             });
-            return false;
+        return false;
         });
     });
 </script>

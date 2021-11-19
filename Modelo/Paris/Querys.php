@@ -26,12 +26,12 @@ class Querys{
     }
 
     public static function update($param, $table, $id){
-        $resp = false;
+        $resp = '';
         $tupla = Model::factory($table)->find_one($param[$id]);
         if(!is_null($tupla)) {
             $tupla->set($param);
             if($tupla->save()){
-                $resp = true;
+                $resp = $tupla->id();
             }
         }    
         return $resp;

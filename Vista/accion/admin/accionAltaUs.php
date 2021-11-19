@@ -6,7 +6,7 @@ if (isset($data['usnombre'])){
         $abmUs = new AbmUsuario();
         $data['uspass']=(md5($data['uspass']));
         $respuesta = $abmUs->alta($data);
-        if (!$respuesta){
+        if ($respuesta == ''){
             $mensaje = " La accion  ALTA No pudo concretarse";
             
         }
