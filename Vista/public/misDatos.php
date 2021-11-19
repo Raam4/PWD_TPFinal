@@ -44,7 +44,7 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Contraseña</label>
                                 <div class="col-lg-7">
-                                    <input class="form-control" id="uspass"  name="uspass"type="text" value="">
+                                    <input class="form-control" id="uspass" name="uspass"type="password" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -59,6 +59,7 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
                                     <input class="form-control" id="usmail" name="usmail" type="text" value="<?=$param['user']['usmail']?>">
                                 </div>
                             </div>
+                            <button type="submit" class="btn btn-outline-warning"><i class="fa fa-save"></i> Guardar</button>
                         </form>
                     </div>
                 </div>
@@ -66,17 +67,25 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
         </div>
     </div>
 </div>
+<script src="../js/port_md5.js"></script>
 <script>
 $(document).ready(function(){
     $('form#misDatos').on('submit', function(){
-        var datos = $(this).serialize();
+        var data = {
+            'idusuario': $('#idusuario').val(),
+            'ustelefono': $('#ustelefono').val(),
+            'usmail': $('#usmail').val()
+        }
+        if($('#uspass').val() != ''){
+            data.pass = md5($('#uspass').val());
+        }
         $.ajax({
             method: 'POST',
-            url: 'accion.php',
-            data: datos,
+            url: '../accion/public/accionMisDatos.php',
+            data: data,
             type: 'json',
             success: function(){
-
+                toastr.success('Los datos fueron actualizados!');
             }
         })
         return false;
