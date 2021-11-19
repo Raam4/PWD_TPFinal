@@ -32,7 +32,7 @@ include_once("../estructura/header.php");
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                    <button type="submit" class="btn btn-outline-primary btn-block">Ingresar</button>
+                                    <button type="submit" class="btn btn-outline-warning btn-block">Ingresar</button>
                             </div>
                         </form>
                         <p class="my-1">

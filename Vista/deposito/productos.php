@@ -106,7 +106,7 @@ $productos = $abmprod->buscar(array());
                     <input type="hidden" name="idproducto" id="idproducto">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <input class="form-control" type="text" name="pronombre" id="pronombre" placeholder="Nombre">
+                            <input class="form-control" type="text" name="pronombre" id="pronombre" placeholder="Nombre" required>
                         </div>
                         <div class="col-sm-2"><label class="pt-2">Rubro:</label></div>
                         <div class="col-sm-4">
@@ -120,7 +120,7 @@ $productos = $abmprod->buscar(array());
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-3">
-                            <input class="form-control" type="number" name="procantstock" id="procantstock" placeholder="Stock">
+                            <input class="form-control" type="number" name="procantstock" id="procantstock" placeholder="Stock" required>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group">
@@ -129,7 +129,7 @@ $productos = $abmprod->buscar(array());
                                     <i class="fas fa-dollar-sign"></i>
                                     </span>
                                 </div>
-                                <input class="form-control" type="number" name='proprecio' id="proprecio" placeholder="Precio">
+                                <input class="form-control" type="number" name='proprecio' id="proprecio" placeholder="Precio" required>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ $productos = $abmprod->buscar(array());
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                            <textarea class="form-control" rows='2' name="prodetalle" id="prodetalle" placeholder="Detalle"></textarea>
+                            <textarea class="form-control" rows='2' name="prodetalle" id="prodetalle" placeholder="Detalle" required></textarea>
                         </div>
                     </div>
             </div>
@@ -188,31 +188,47 @@ $productos = $abmprod->buscar(array());
     }
 
     $(document).ready(function(){
-        $('#form-modal').on('submit', function(){
-            var formData = new FormData();
-            formData.append('pronombre', $('#pronombre').val());
-            formData.append('procantstock', $('#procantstock').val());
-            formData.append('proprecio', $('#proprecio').val());
-            formData.append('prodetalle', $('#prodetalle').val());
-            formData.append('idrubro', $('#idrubro').val());
-            if($('#idproducto').val() != ''){
-                formData.append('idproducto', $('#idproducto').val());
-            }
-            if($('#imgprod').val() != ''){
-                formData.append('imgprod', $('#imgprod')[0].files[0]);
-            }
-            $.ajax({
-                method: 'post',
-                url: '../accion/deposito/accionGuardarProd.php',
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(){
-                    $('#form-modal').off().submit();
+        $("#form-modal").validate({
+            messages: {
+                pronombre: {
+                    required: "El campo es obligatorio.",
+                },
+                procantstock: {
+                    required: "El campo es obligatorio.",
+                },
+                proprecio: {
+                    required: "El campo es obligatorio.",
+                },
+                prodetalle: {
+                    required: "El campo es obligatorio.",
                 }
-            });
-        return false;
+            },
+            submitHandler: function() {
+                var formData = new FormData();
+                formData.append('pronombre', $('#pronombre').val());
+                formData.append('procantstock', $('#procantstock').val());
+                formData.append('proprecio', $('#proprecio').val());
+                formData.append('prodetalle', $('#prodetalle').val());
+                formData.append('idrubro', $('#idrubro').val());
+                if($('#idproducto').val() != ''){
+                    formData.append('idproducto', $('#idproducto').val());
+                }
+                if($('#imgprod').val() != ''){
+                    formData.append('imgprod', $('#imgprod')[0].files[0]);
+                }
+                $.ajax({
+                    method: 'post',
+                    url: '../accion/deposito/accionGuardarProd.php',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function(){
+                        $('#form-modal').off().submit();
+                    }
+                });
+            return false;
+            }
         });
     });
 </script>

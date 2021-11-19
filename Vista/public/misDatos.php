@@ -51,13 +51,13 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Telefono:</label>
                                 <div class="col-lg-7">
-                                    <input class="form-control" id="ustelefono" name="ustelefono" type="text" value="<?=$param['user']['ustelefono']?>">
+                                    <input class="form-control" id="ustelefono" name="ustelefono" type="text" value="<?=$param['user']['ustelefono']?>" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Email:</label>
                                 <div class="col-lg-7">
-                                    <input class="form-control" id="usmail" name="usmail" type="text" value="<?=$param['user']['usmail']?>">
+                                    <input class="form-control" id="usmail" name="usmail" type="text" value="<?=$param['user']['usmail']?>" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-outline-warning"><i class="fa fa-save"></i> Guardar</button>
@@ -71,7 +71,18 @@ $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
 <script src="../js/port_md5.js"></script>
 <script>
 $(document).ready(function(){
-    $('form#misDatos').on('submit', function(){
+    //agregar validacion de la imagen de perfil aparte
+    //la pass no es necesaria, pero habria que validar con un regex
+    $("form#misDatos").validate({
+        messages: {
+            ustelefono: {
+                required: "El campo es obligatorio.",
+            },
+            usmail: {
+                required: "El campo es obligatorio.",
+            },
+        },
+        submitHandler: function() {
         var data = {
             'idusuario': $('#idusuario').val(),
             'ustelefono': $('#ustelefono').val(),
@@ -88,8 +99,9 @@ $(document).ready(function(){
             success: function(){
                 toastr.success('Los datos fueron actualizados!');
             }
-        })
+        });
         return false;
+        }
     });
     $('#usimg').on('click', function(){
         if(confirm('Desea modificar su imagen de perfil?')){
