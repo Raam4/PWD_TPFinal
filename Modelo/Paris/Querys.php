@@ -5,7 +5,7 @@ class Querys{
         $tupla = Model::factory($table)->create();
         $tupla->set($param);
         if($tupla->save()){
-            $resp = true;
+            $resp = $tupla->id();
         }
         return $resp;
     }

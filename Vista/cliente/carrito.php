@@ -98,10 +98,10 @@ $abmprod = new AbmProducto();
                         </h6>
                     </td>
                     <td colspan="2">
-                        <button class="btn btn-outline-success btn-md" type="button" onclick="finalizar()">
+                        <button class="btn btn-outline-success btn-md" type="button" onclick="$('#modalCerrarPedido').modal('show')">
                             <i class="fas fa-shopping-cart"></i> Finalizar
                         </button>
-                        <button class="btn btn-outline-danger btn-md" type="button" onclick="vaciar()">
+                        <button class="btn btn-outline-danger btn-md" type="button"  onclick="vaciar()">
                             <i class="fas fa-trash"></i> Vaciar
                         </button>
                     </td>
@@ -110,53 +110,47 @@ $abmprod = new AbmProducto();
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="modalCerrarPedido" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content bg-success" id="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Cerrar Pedido</h4>
             </div>
             <div class="modal-body">
-                <form id="form-modal">
+                <form id="formCerrarPedido">
                     <input type="hidden" name="idproducto" id="idproducto">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <input class="form-control" type="text" name="pronombre" id="pronombre" placeholder="Nombre">
-                        </div>
-                        <div class="col-sm-2"><label>Rubro:</label></div>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="idrubro" id="idrubro">
-                                <?php
-                                foreach($rubros as $rub){
-                                    echo '<option value="'.$rub['idrubro'].'">'.$rub['runombre'].'</option>';
-                                }?>
-                            </select>
+                            <input class="form-control" type="text" name="usnombre" id="usnombre" placeholder="Nombre" value="<?=$param['user']['usnombre']?>" required>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-sm-3">
-                            <input class="form-control" type="number" name="procantstock" id="procantstock" placeholder="Stock">
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" name="ustelefono" id="ustelefono" placeholder="Telefono" value="<?=$param['user']['ustelefono']?>" required>
                         </div>
                         <div class="col-sm-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    </span>
-                                </div>
-                                <input class="form-control" type="number" name='proprecio' id="proprecio" placeholder="Precio">
-                            </div>
+                            <input class="form-control" type="text" name='usdireccion' id="usdireccion" placeholder="Direccion" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                            <textarea class="form-control" rows='2' name="prodetalle" id="prodetalle" placeholder="Detalle"></textarea>
+                            <label>Forma de Pago:</label>
+                            <div class="form-group ms-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pago" checked="">
+                                    <label class="form-check-label">Online</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pago">
+                                    <label class="form-check-label">En domicilio</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="reset" class="btn btn-outline-light" onclick="$('#modal').modal('hide')">Close</button>
-              <button type="submit" class="btn btn-outline-light">Save changes</button>
+              <button type="reset" class="btn btn-outline-light" onclick="$('#modalCerrarPedido').modal('hide')">Cancelar</button>
+              <button type="submit" class="btn btn-outline-light">Finalizar Pedido</button>
             </form>
             </div>
         </div>
@@ -192,7 +186,44 @@ $abmprod = new AbmProducto();
             });
             $('#totcar').text('$'+total);
         });
+        $("#formCerrarPedido").validate({
+            messages: {
+                usnombre: {
+                    required: "El campo es obligatorio.",
+                },
+                ustelefono: {
+                    required: "El campo es obligatorio.",
+                },
+                usdireccion: {
+                    required: "El campo es obligatorio.",
+                }
+            },
+            submitHandler: function() {
+                var data = [];
+                var id = 0;
+                var cant = 0;
+                $("[id^='fila']").each(function(){
+                    id = $(this).attr('class');
+                    cant = $('#'+id).val();
+                    data.push({'idproducto': id, 'cantidad': cant});
+                });
+                $.ajax({
+                    method: 'POST',
+                    url: '../accion/cliente/accionFinPedido.php',
+                    data: {'arreglo' : data},
+                    type: 'json',
+                    success: function(ret){
+                        $('#modalCerrarPedido').modal('hide');
+                        $('#modalMsg').append(ret);
+                        $('#modalPedido').modal('show');
+                        vaciar();
+                    }
+                });
+                return false;
+            }
+        });
     });
+
     function quitar(fila){
         var total = 0;
         var data = {'idproducto' : fila.attr('class')};
@@ -216,28 +247,5 @@ $abmprod = new AbmProducto();
         });
     }
 
-    function finalizar(){
-        var data = [];
-        var id = 0;
-        var cant = 0;
-        $("[id^='fila']").each(function(){
-            id = $(this).attr('class');
-            cant = $('#'+id).val();
-            data.push({'idproducto': id, 'cantidad': cant});
-        });
-        console.log(typeof data);
-        console.log(data);
-        $.ajax({
-            method: 'POST',
-            url: '../accion/cliente/accionFinPedido.php',
-            data: {'arreglo' : data},
-            type: 'json',
-            success: function(ret){
-                $('#modalMsg').append(ret);
-                $('#modalPedido').modal('show');
-                vaciar();
-            }
-        });
-    }
 </script>
 <?php } include_once("../estructura/footer.php");?>
