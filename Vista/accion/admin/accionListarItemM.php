@@ -47,7 +47,7 @@ if (count($colItemMenu) > 0) {
             <button class='btn btn-danger mx-2' id='cancelIt".$itm['idmenu']."'  style='display:none' onclick='controlButton(".$itm['idmenu'].",0)' ><i class='fa fa-times'></i> </button>
             <button class='borrarItm btn btn-danger' id='borrarIt".$itm['idmenu']."' data-id='".$itm['idmenu'] ."' ><i class='fa fa-arrow-down'></i></button>";
         }        
-        if($itm["medeshabilitado"]!=null){
+        if($itm["medeshabilitado"]!=null && $itm["medeshabilitado"]!='0000-00-00 00:00:00'){
             $strhtnl.="<button class='btn btn-success' id='habilIt' data-id='".$itm['idmenu'] ."' ><i class='fa fa-arrow-up'></i> </button> ";
         }       
  
