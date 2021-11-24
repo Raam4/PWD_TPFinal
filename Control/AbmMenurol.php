@@ -7,7 +7,7 @@ class AbmMenuRol extends AbmSuper{
 
     public function __construct(){
         $this->clase = new MenuRol();
-        $this->id = ['idmenurol', 'idrol'];
+        $this->id = ['idmenu', 'idrol'];
     }
 }
 ?>

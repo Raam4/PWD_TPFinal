@@ -48,5 +48,15 @@ class Querys{
         return $resp;
     }
     
+    public static function deleteClaveComp($param, $table){
+        $resp = false;
+        $tupla = Model::factory($table)->where($param)->find_one();
+        if (!is_null($tupla)) {
+            if ($tupla->delete()){
+                $resp = true;
+            }
+        }
+        return $resp;
+    }
 }
 ?>
