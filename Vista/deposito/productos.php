@@ -50,6 +50,9 @@ $productos = $abmprod->buscar(array());
                     </tr>
                 </thead>
                 <tbody>
+                    <td colspan=8>
+                        <button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus" title='Alta Producto'></i> Alta</button>
+                    </td>
                     <?php
                     foreach($productos as $item){
                         $id = $item['idproducto'];
@@ -87,9 +90,6 @@ $productos = $abmprod->buscar(array());
                     </tr>
                     <?php } ?>
                 </tbody>
-                <tfoot>
-                    <td colspan="7"><button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus" title='Alta Producto'></i> Alta</button>
-                </tfoot>
             </table>
         </div>
     </div>
