@@ -88,17 +88,17 @@ $roles = $abmrol->buscar(array());
         var mail = currentRow.find("td:eq(2)").html();
         var tel = currentRow.find("td:eq(3)").html();
         var pass = currentRow.find("td:eq(4)").html();
-        if (nom == '<br>' || mail == '<br>' || tel == '<br>' || pass == '<br>') {
-            if(nom == '<br>'){
+        if (nom == '' || mail == '' || tel == '' || pass == '') {
+            if(nom == ''){
                 currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
             }
-            if(mail == '<br>'){
+            if(mail == ''){
                 currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
             }
-            if(tel == '<br>'){
+            if(tel == ''){
                 currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
             }
-            if(pass == '<br>'){
+            if(pass == ''){
                 currentRow.find("td:eq(4)").attr('style', 'border: 3px solid red');
             }
         }else{
@@ -163,14 +163,14 @@ $roles = $abmrol->buscar(array());
             var col1 = currentRow.find("td:eq(1)").html();
             var col2 = currentRow.find("td:eq(2)").html();
             var col3 = currentRow.find("td:eq(3)").html();
-            if(col1 == '<br>' || col2 == '<br>' || col3 == '<br>'){
-                if(col1 == '<br>'){
+            if(col1 == '' || col2 == '' || col3 == ''){
+                if(col1 == ''){
                     currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
                 }
-                if(col2 == '<br>'){
+                if(col2 == ''){
                     currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
                 }
-                if(col3 == '<br>'){
+                if(col3 == ''){
                     currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
                 }
             }else{
