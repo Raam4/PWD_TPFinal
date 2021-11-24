@@ -9,6 +9,8 @@ if(!$objSess->activa()){
     exit();
 }
 include_once("../estructura/header.php");
+$abmrol = new AbmRol();
+$roles = $abmrol->buscar(array());
 ?>
 
 <div class="content-wrapper">
@@ -23,7 +25,35 @@ include_once("../estructura/header.php");
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="modalroles" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-success" id="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-white">Gestionar Roles</h4>
+            </div>
+            <div class="modal-body text-center">
+                <form id="formroles" name="formroles">
+                    <div class="form-group">
+                        <input type="hidden" id="usid" name="usid">
+                    <?php foreach($roles as $rol){
+                        $idrol = $rol['idrol'];
+                    ?>
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="rol<?=$idrol?>" name="roles[]" value="<?=$idrol?>">
+                            <label class="custom-control-label" for="rol<?=$idrol?>"><?=$rol['rodescripcion']?></label>
+                        </div>
+                    <?php } ?>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="reset" class="btn btn-outline-light" onclick="$('#modalroles').modal('hide')">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-light">Guardar</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $.ajax({
@@ -36,6 +66,20 @@ include_once("../estructura/header.php");
                 console.log(data);
             }
         })
+        $('#formroles').on('submit', function(){
+            var dataToSend = $(this).serialize();
+            $.ajax({
+                method: 'post',
+                url: '../accion/admin/accionSaveRol.php',
+                data: dataToSend,
+                type: 'json',
+                success: function(data){
+                    $("#modalroles").modal("hide");
+                    toastr.success('Roles guardados!');
+                }
+            });
+            return false;
+        });
     });
 
     $(document).on("click", "#altaUs", function() {
@@ -167,51 +211,26 @@ include_once("../estructura/header.php");
         // $("#fm")[0].reset();
         $(dlg).hide();
     }
-    // $(document).on("click", "#editarUs", function() {
-    //     var currentRow = $(this).closest("tr");
-    //     var col1 = currentRow.find("td:eq(0)").html();
-    //     var col2 = currentRow.find("td:eq(1)").html();
-    //     var col3 = currentRow.find("td:eq(2)").html();
-
-    //     $('#us_nombre').attr("value", col2);
-    //     $('#us_email').attr("value", col3);
-    //     $('#dlg').show();
-
-    //     $('form#fm').submit(function(event) {
-    //         event.preventDefault();
-    //         var $f = $(this);
-    //         if ($f.data('locked') == undefined && !$f.data('locked')) {
-    //             //recuperar datos actualizados
-    //             var nom = $('#us_nombre').val();
-    //             var mail = $('#us_email').val();
-    //             var dataF = {
-    //                 "idusuario": col1,
-    //                 "usnombre": nom,
-    //                 "usmail": mail
-    //             };
-    //             $.ajax({
-    //                 method: 'post',
-    //                 url: '../accion/usuario/editarUs.php',
-    //                 data: dataF,
-    //                 type: 'json',
-    //                 beforeSend: function() {
-    //                     $f.data('locked', true);
-    //                 },
-    //                 success: function(data) {
-    //                     $("#salida").load('../accion/usuario/listar.php');
-    //                 },
-    //                 error: function(data) {},
-    //                 complete: function() {
-    //                     $f.data('locked', false);
-    //                     $f.off().submit();
-    //                 }
-
-    //             });
-    //         }
-    //         $("#dlg").on("click", "#cancelarUs", function() {
-    //             cerrarDlg();
-    //         });
-    //     });
-    // });
+    
+    function roles(iduser){
+        $('#usid').attr('value', iduser);
+        $("input[name='roles[]']").each(function(){$(this).attr('checked', false);});
+        $.ajax({
+            method: 'post',
+            url: '../accion/admin/accionRetRol.php',
+            data: {'idusuario': iduser},
+            type: 'json',
+            success: function(data){
+                data = JSON.parse(data);
+                $("input[name='roles[]']").each(function(){
+                    var val = $(this).val();
+                    if($.inArray(val, data) != -1){
+                        $(this).attr('checked', true);
+                    }
+                })
+            }
+        });
+        $("#modalroles").modal("show");
+    }
 </script>
 <?php include_once('../estructura/footer.php'); ?>

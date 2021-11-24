@@ -24,7 +24,7 @@ class UsuarioRol extends ModOrm{
     }
     
     public function eliminar($param){
-        return Querys::delete($param, self::$_table, self::$_id_column);
+        return Querys::deleteClaveComp($param, self::$_table);
     }
     
     public function listar($param){
