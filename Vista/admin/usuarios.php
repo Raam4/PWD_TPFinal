@@ -88,7 +88,20 @@ $roles = $abmrol->buscar(array());
         var mail = currentRow.find("td:eq(2)").html();
         var tel = currentRow.find("td:eq(3)").html();
         var pass = currentRow.find("td:eq(4)").html();
-        if (nom != '' && mail != '' && tel != '' && pass != '') {
+        if (nom == '<br>' || mail == '<br>' || tel == '<br>' || pass == '<br>') {
+            if(nom == '<br>'){
+                currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
+            }
+            if(mail == '<br>'){
+                currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
+            }
+            if(tel == '<br>'){
+                currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
+            }
+            if(pass == '<br>'){
+                currentRow.find("td:eq(4)").attr('style', 'border: 3px solid red');
+            }
+        }else{
             $.ajax({
                 method: 'post',
                 url: '../accion/admin/accionAltaUs.php',
@@ -101,6 +114,10 @@ $roles = $abmrol->buscar(array());
                 type: 'json',
                 success: function(data) {
                     $("#salida").load('../accion/admin/accionListarUsuarios.php');
+                    find("td:eq(1)").removeAttr('style');
+                    find("td:eq(1)").removeAttr('style');
+                    find("td:eq(1)").removeAttr('style');
+                    find("td:eq(1)").removeAttr('style');
                 },
                 error: function(data) {
                     console.log(data);
@@ -132,7 +149,7 @@ $roles = $abmrol->buscar(array());
     
     $(document).on("click", ".editarUs", function() {
         var currentRow = $(this).closest("tr");
-        var col1 = currentRow.find("td:eq(0)").html();
+        var col0 = currentRow.find("td:eq(0)").html();
         // var butEdit = $(this).closest("button");
 
         currentRow.find("td:eq(1)").attr('contenteditable', true);
@@ -140,21 +157,39 @@ $roles = $abmrol->buscar(array());
         currentRow.find("td:eq(3)").attr('contenteditable', true);
         currentRow.find("td:eq(1)").focus();
 
-        controlButton(col1, 1);
+        controlButton(col0, 1);
 
-        $(document).on("click", "#confirm" + col1, function() {
-        // controlar no-accion si no se modifico nada
-            currentRow.find("td:eq(1)").attr('contenteditable', false);
-            currentRow.find("td:eq(2)").attr('contenteditable', false);
-            currentRow.find("td:eq(3)").attr('contenteditable', false);
+        $(document).on("click", "#confirm" + col0, function() {
+            var col1 = currentRow.find("td:eq(1)").html();
+            var col2 = currentRow.find("td:eq(2)").html();
+            var col3 = currentRow.find("td:eq(3)").html();
+            if(col1 == '<br>' || col2 == '<br>' || col3 == '<br>'){
+                if(col1 == '<br>'){
+                    currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
+                }
+                if(col2 == '<br>'){
+                    currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
+                }
+                if(col3 == '<br>'){
+                    currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
+                }
+            }else{
+                currentRow.find("td:eq(1)").attr('contenteditable', false);
+                currentRow.find("td:eq(2)").attr('contenteditable', false);
+                currentRow.find("td:eq(3)").attr('contenteditable', false);
 
-            var dataF = {
-                "idusuario": currentRow.find("td:eq(0)").html(),
-                "usnombre": currentRow.find("td:eq(1)").html(),
-                "usmail": currentRow.find("td:eq(2)").html(),
-                "ustelefono": currentRow.find("td:eq(3)").html()
-            };
-            editar(dataF);
+                var dataF = {
+                    "idusuario": currentRow.find("td:eq(0)").html(),
+                    "usnombre": currentRow.find("td:eq(1)").html(),
+                    "usmail": currentRow.find("td:eq(2)").html(),
+                    "ustelefono": currentRow.find("td:eq(3)").html()
+                };
+                if(editar(dataF)){
+                    currentRow.find("td:eq(1)").removeAttr('style');
+                    currentRow.find("td:eq(2)").removeAttr('style');
+                    currentRow.find("td:eq(3)").removeAttr('style');
+                }
+            }
         })
 
     });
@@ -171,6 +206,7 @@ $roles = $abmrol->buscar(array());
     }
 
     function editar(dataF) {
+        var ret = false;
         $.ajax({
             method: 'post',
             url: '../accion/admin/accionEditarUs.php',
@@ -179,12 +215,13 @@ $roles = $abmrol->buscar(array());
             success: function(data) {
                 // alert("exito");
                 $("#salida").load('../accion/admin/accionListarUsuarios.php');
+                ret = true;
             },
             error: function(data) {
                 alert("error");
             }
         })
-        console.log(dataF);
+        return ret;
     }
     
 
