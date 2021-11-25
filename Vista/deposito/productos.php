@@ -121,7 +121,8 @@ $productos = $abmprod->buscar(array());
                         </div>
                         <div class="col-sm-2"><label class="pt-2">Rubro:</label></div>
                         <div class="col-sm-4">
-                            <select class="form-control" name="idrubro" id="idrubro">
+                            <select class="form-control" name="idrubro" id="idrubro" required>
+                                <option value="">Seleccionar...</option>
                                 <?php
                                 foreach($rubros as $rub){
                                     echo '<option value="'.$rub['idrubro'].'">'.$rub['runombre'].'</option>';
@@ -131,7 +132,7 @@ $productos = $abmprod->buscar(array());
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-3">
-                            <input class="form-control" type="number" name="procantstock" id="procantstock" placeholder="Stock" required>
+                            <input class="form-control" type="number" min=0 name="procantstock" id="procantstock" placeholder="Stock" required>
                         </div>
                         <div class="col-sm-6">
                             <div class="input-group">
@@ -217,18 +218,37 @@ $productos = $abmprod->buscar(array());
 
     $(document).ready(function(){
         $("#form-modal").validate({
+            rules:{
+                pronombre: {
+                    rangelength: [3, 20],
+                },
+                proprecio: {
+                    step: 0.01,
+                },
+                imgprod: {
+                    accept: 'jpg, jpeg, png, gif',
+                }
+            },
             messages: {
                 pronombre: {
                     required: "El campo es obligatorio.",
+                    rangelength: "Debe ingresar entre 3 y 20 carácteres",
+                },
+                idrubro: {
+                    required: "Seleccione un rubro",
                 },
                 procantstock: {
                     required: "El campo es obligatorio.",
                 },
                 proprecio: {
                     required: "El campo es obligatorio.",
+                    step: "Decimales hasta con 2 digitos después de la coma",
                 },
                 prodetalle: {
                     required: "El campo es obligatorio.",
+                },
+                imgprod: {
+                    accept: "Formato de imagen inválido, permitidos: jpg, jpeg, png y gif."
                 }
             },
             submitHandler: function() {
