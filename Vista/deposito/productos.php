@@ -82,10 +82,21 @@ $productos = $abmprod->buscar(array());
                             </div>
                         </td>
                         <td>
-                            <button id="editar" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
+                            <button id="editar<?=$id?>" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
                                 <i class="fas fa-pen"></i> </button>
-                            <button id="borrar" class="btn btn-danger btn-sm" type="button" onclick="borrar(<?=$id?>)" title='Borrar'>
-                                <i class="fas fa-trash"></i> </button>
+                                <?php
+                                if(is_null($item['prodeshabilitado']) || $item['prodeshabilitado'] == '00-00-00 00:00:00'){
+                                    $statusal = 'inline';
+                                    $statusba = 'none';
+                                }else{
+                                    $statusal = 'none';
+                                    $statusba = 'inline';
+                                }
+                                ?>
+                            <button id="baja<?=$id?>" class="btn btn-danger btn-sm" type="button" style="display: <?=$statusal?>" onclick="deshabilitar(<?=$id?>)" title='deshabilitar'>
+                                <i class="fas fa-arrow-down"></i> </button>
+                            <button id="alta<?=$id?>" class="btn btn-success btn-sm" type="button" style="display: <?=$statusba?>" onclick="habilitar(<?=$id?>)" title='habilitar'>
+                            <i class="fas fa-arrow-up"></i> </button>
                         </td>
                     </tr>
                     <?php } ?>
@@ -174,7 +185,7 @@ $productos = $abmprod->buscar(array());
         });
     }
 
-    function borrar(id){
+    function deshabilitar(id){
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
@@ -182,7 +193,24 @@ $productos = $abmprod->buscar(array());
             data: dataToSend,
             type: 'json',
             success: function(data){
-                toastr.error('Producto eliminado.');
+                $('#baja'+id).hide();
+                $('#alta'+id).show();
+                toastr.error('Producto deshabilitado.');
+            }
+        });
+    }
+
+    function habilitar(id){
+        var dataToSend = {'idproducto': id};
+        $.ajax({
+            method: 'post',
+            url: '../accion/deposito/accionHabProd.php',
+            data: dataToSend,
+            type: 'json',
+            success: function(data){
+                $('#baja'+id).show();
+                $('#alta'+id).hide();
+                toastr.success('Producto habilitado.');
             }
         });
     }

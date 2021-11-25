@@ -2,5 +2,5 @@
 include_once("../../../configuracion.php");
 $data = data_submitted();
 $abmprod = new AbmProducto();
-$abmprod->deshabilitar($data);
+$abmprod->habilitar($data);
 ?>
