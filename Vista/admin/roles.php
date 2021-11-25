@@ -160,7 +160,7 @@ $(document).ready(function(){
     $("#nuevorol").validate({
         messages: {
             rodescripcion: {
-                required: "El campo es obligatorio.",
+                required: "El campo es obligatorio",
             }
         },
         submitHandler: function() {
