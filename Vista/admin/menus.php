@@ -48,7 +48,17 @@ include_once("../estructura/header.php");
         var desc = currentRow.find("td:eq(2)").html();
         var idp = currentRow.find("td:eq(3)").html();
 
-        if (nom != '' && desc != '' && idp != '') {
+        if (nom == '' || desc == '' || idp == '') {
+            if(nom == ''){
+                currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
+            }
+            if(desc == ''){
+                currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
+            }
+            if(idp == ''){
+                currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
+            }
+        }else{
             $.ajax({
                 method: 'post',
                 url: '../accion/admin/accionAltaItm.php',
@@ -112,7 +122,7 @@ include_once("../estructura/header.php");
 
     $(document).on("click", ".editarItm", function() {
         var currentRow = $(this).closest("tr");
-        var col1 = currentRow.find("td:eq(0)").html();
+        var col0 = currentRow.find("td:eq(0)").html();
         // var butEdit = $(this).closest("button");
 
         currentRow.find("td:eq(1)").attr('contenteditable', true);
@@ -120,22 +130,41 @@ include_once("../estructura/header.php");
         currentRow.find("td:eq(3)").attr('contenteditable', true);
         currentRow.find("td:eq(1)").focus();
 
-        controlButton(col1, 1);
+        controlButton(col0, 1);
 
-        $(document).on("click", "#confirmIt" + col1, function() {
+        $(document).on("click", "#confirmIt" + col0, function() {
         // controlar no-accion si no se modifico nada
-            currentRow.find("td:eq(1)").attr('contenteditable', false);
-            currentRow.find("td:eq(2)").attr('contenteditable', false);
-            currentRow.find("td:eq(3)").attr('contenteditable', false);
+            var col1 = currentRow.find("td:eq(1)").html();
+            var col2 = currentRow.find("td:eq(2)").html();
+            var col3 = currentRow.find("td:eq(3)").html();
+            if(col1 == '' || col2 == '' || col3 == ''){
+                if(col1 == ''){
+                    currentRow.find("td:eq(1)").attr('style', 'border: 3px solid red');
+                }
+                if(col2 == ''){
+                    currentRow.find("td:eq(2)").attr('style', 'border: 3px solid red');
+                }
+                if(col3 == ''){
+                    currentRow.find("td:eq(3)").attr('style', 'border: 3px solid red');
+                }
+            }else{
+                currentRow.find("td:eq(1)").attr('contenteditable', false);
+                currentRow.find("td:eq(2)").attr('contenteditable', false);
+                currentRow.find("td:eq(3)").attr('contenteditable', false);
 
-            var dataF = {
-                "idmenu": currentRow.find("td:eq(0)").html(),
-                "menombre": currentRow.find("td:eq(1)").html(),
-                "medescripcion": currentRow.find("td:eq(2)").html(),
-                "idpadre": currentRow.find("td:eq(3)").html()
-            };
-            // controlButton(col1, 0);
-            editar(dataF);
+                var dataF = {
+                    "idmenu": currentRow.find("td:eq(0)").html(),
+                    "menombre": currentRow.find("td:eq(1)").html(),
+                    "medescripcion": currentRow.find("td:eq(2)").html(),
+                    "idpadre": currentRow.find("td:eq(3)").html()
+                };
+
+                if(editar(dataF)){
+                    currentRow.find("td:eq(1)").removeAttr('style');
+                    currentRow.find("td:eq(2)").removeAttr('style');
+                    currentRow.find("td:eq(3)").removeAttr('style');
+                }
+            }
         })
 
     });

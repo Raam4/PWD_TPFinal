@@ -1,6 +1,10 @@
 <?php
 include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
+if(!$objSess->activa()){
+    header('location:../public/login.php');
+    exit();
+}
 include_once("../estructura/header.php");
 $nmimg = md5($param['user']['usnombre'].$param['user']['idusuario']);
 ?>
