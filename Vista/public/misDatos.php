@@ -74,12 +74,24 @@ $(document).ready(function(){
     //agregar validacion de la imagen de perfil aparte
     //la pass no es necesaria, pero habria que validar con un regex
     $("form#misDatos").validate({
-        messages: {
+        rules: {
             ustelefono: {
-                required: "El campo es obligatorio.",
+                rangelength: [6, 13],
+                number: true,
             },
             usmail: {
-                required: "El campo es obligatorio.",
+                pattern: /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i,
+            },
+        },
+        messages: {
+            ustelefono: {
+                required: "El campo es obligatorio",
+                number: "Ingrese solo números, sin 0 ni 15",
+                rangelength: 'La cantidad de números es inválida',
+            },
+            usmail: {
+                required: "El campo es obligatorio",
+                pattern: "Ingrese una direccion de correo valida",
             },
         },
         submitHandler: function() {

@@ -187,15 +187,27 @@ $abmprod = new AbmProducto();
             $('#totcar').text('$'+total);
         });
         $("#formCerrarPedido").validate({
-            messages: {
+            rules:{
                 usnombre: {
-                    required: "El campo es obligatorio.",
+                    rangelength: [3, 15],
                 },
                 ustelefono: {
-                    required: "El campo es obligatorio.",
+                    rangelength: [6, 13],
+                    number: true,
+                },
+            },
+            messages: {
+                usnombre: {
+                    required: "El campo es obligatorio",
+                    rangelength: "Debe ingresar entre 3 y 15 carácteres",
+                },
+                ustelefono: {
+                    required: "El campo es obligatorio",
+                    number: "Ingrese solo números, sin 0 ni 15",
+                    rangelength: 'La cantidad de números es inválida',
                 },
                 usdireccion: {
-                    required: "El campo es obligatorio.",
+                    required: "El campo es obligatorio",
                 }
             },
             submitHandler: function() {

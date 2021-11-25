@@ -18,7 +18,7 @@ include_once("../estructura/header.php");
                     </div>
                     <div class="form-group">
                         <label for="telefono">Telefono (Whatsapp)</label>
-                        <input type="email" id="telefono" name="telefono" class="form-control" required>
+                        <input type="text" id="telefono" name="telefono" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="resumen">Resumen</label>
@@ -39,18 +39,32 @@ include_once("../estructura/header.php");
 <script>
 $('body').ready(function () {
     $("form#contacto").validate({
-        messages: {
+        rules: {
             nombre: {
-                required: "El campo es obligatorio.",
+                rangelength: [5, 15],
+                pattern: /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/,
             },
             telefono: {
-                required: "El campo es obligatorio.",
+                rangelength: [6, 13],
+                number: true,
+            },
+        },
+        messages: {
+            nombre: {
+                required: "El campo es obligatorio",
+                pattern: 'Solo se permiten letras',
+                rangelength: 'Debe ingresar entre 5 y 15 carácteres',
+            },
+            telefono: {
+                required: "El campo es obligatorio",
+                number: "Ingrese solo números, sin 0 ni 15",
+                rangelength: 'La cantidad de números es inválida',
             },
             resumen: {
-                required: "El campo es obligatorio.",
+                required: "El campo es obligatorio",
             },
             mensaje: {
-                required: "El campo es obligatorio.",
+                required: "El campo es obligatorio",
             },
         },
     });
