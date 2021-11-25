@@ -34,8 +34,11 @@ $abmprod = new AbmProducto();
             <table class="table table-striped text-center">
                 <thead>
                     <tr>
-                        <th style="width: 20%">
+                        <th style="width: 15%">
                             Producto
+                        </th>
+                        <th style="width: 5%">
+                            Stock
                         </th>
                         <th style="width: 10%">
                             Cantidad
@@ -63,6 +66,11 @@ $abmprod = new AbmProducto();
                         <td>
                             <h6>
                                 <?php echo $prod['pronombre']; ?>
+                            </h6>
+                        </td>
+                        <td>
+                            <h6>
+                                <?php echo $prod['procantstock']; ?>
                             </h6>
                         </td>
                         <td>
@@ -225,10 +233,17 @@ $abmprod = new AbmProducto();
                     data: {'arreglo' : data},
                     type: 'json',
                     success: function(ret){
+                        ret = JSON.parse(ret);
                         $('#modalCerrarPedido').modal('hide');
-                        $('#modalMsg').append(ret);
-                        $('#modalPedido').modal('show');
-                        vaciar();
+                        if($.isNumeric(ret)){
+                            $('#modalMsg').append(ret);
+                            $('#modalPedido').modal('show');
+                            vaciar();
+                        }else{
+                            for(let key in ret){
+                                toastr.error("Stock insuficiente de "+ret[key]);
+                            }
+                        }
                     }
                 });
                 return false;
