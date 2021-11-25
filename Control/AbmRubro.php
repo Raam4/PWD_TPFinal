@@ -15,5 +15,15 @@ class AbmRubro extends AbmSuper{
         }
         return $res;
     }
+
+    public function manage($param){
+        $obj = $this->buscar($param);
+        if(is_null($obj[0]['rudeshabilitado']) || $obj[0]['rudeshabilitado']=='00-00-00 00:00:00'){
+            $obj[0]['rudeshabilitado'] = date('Y-m-d H:i:s');
+        }else{
+            $obj[0]['rudeshabilitado'] = null;
+        }
+        return $this->modificacion($obj[0]);
+    }
 }
 ?>
