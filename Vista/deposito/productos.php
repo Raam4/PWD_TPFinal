@@ -44,13 +44,16 @@ $productos = $abmprod->buscar(array());
                         <th style="width: 10%">
                             Imagen
                         </th>
-                        <th style="width: 22%">
+                        <th style="width: 5%">
+                            Estado
+                        </th>
+                        <th style="width: 17%">
                             Acciones
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td colspan=8>
+                    <td colspan=9>
                         <button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus" title='Alta Producto'></i> Alta</button>
                     </td>
                     <?php
@@ -81,6 +84,9 @@ $productos = $abmprod->buscar(array());
                                 <img src="../../files/prods/<?=md5($item['pronombre'].$item['idproducto'])?>.jpg" class="img-circle" style="max-width:100%;width:auto;height:auto;" alt="Imagen Producto">
                             </div>
                         </td>
+                        <td id="status<?=$id?>">
+                            <?php if(is_null($item['prodeshabilitado'])) : echo 'Habilitado'; else : echo 'Deshabilitado'; endif?>
+                        </td>
                         <td>
                             <button id="editar<?=$id?>" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
                                 <i class="fas fa-pen"></i> </button>
@@ -93,9 +99,9 @@ $productos = $abmprod->buscar(array());
                                     $statusba = 'inline';
                                 }
                                 ?>
-                            <button id="baja<?=$id?>" class="btn btn-danger btn-sm" type="button" style="display: <?=$statusal?>" onclick="deshabilitar(<?=$id?>)" title='deshabilitar'>
+                            <button id="baja<?=$id?>" class="btn btn-danger btn-sm" type="button" style="display: <?=$statusal?>" onclick="manage(0, <?=$id?>)" title='deshabilitar'>
                                 <i class="fas fa-arrow-down"></i> </button>
-                            <button id="alta<?=$id?>" class="btn btn-success btn-sm" type="button" style="display: <?=$statusba?>" onclick="habilitar(<?=$id?>)" title='habilitar'>
+                            <button id="alta<?=$id?>" class="btn btn-success btn-sm" type="button" style="display: <?=$statusba?>" onclick="manage(1, <?=$id?>)" title='habilitar'>
                             <i class="fas fa-arrow-up"></i> </button>
                         </td>
                     </tr>
@@ -186,32 +192,26 @@ $productos = $abmprod->buscar(array());
         });
     }
 
-    function deshabilitar(id){
+    function manage(stat, id){
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/deposito/accionBorrarProd.php',
+            url: '../accion/deposito/accionManageProd.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
-                $('#baja'+id).hide();
-                $('#alta'+id).show();
-                toastr.error('Producto deshabilitado.');
-            }
-        });
-    }
-
-    function habilitar(id){
-        var dataToSend = {'idproducto': id};
-        $.ajax({
-            method: 'post',
-            url: '../accion/deposito/accionHabProd.php',
-            data: dataToSend,
-            type: 'json',
-            success: function(data){
-                $('#baja'+id).show();
-                $('#alta'+id).hide();
-                toastr.success('Producto habilitado.');
+                if(stat == 1){
+                    $('#baja'+id).show();
+                    $('#alta'+id).hide();
+                    $('#status'+id).text('Habilitado');
+                    toastr.success('Producto habilitado.');
+                }
+                if(stat == 0){
+                    $('#baja'+id).hide();
+                    $('#alta'+id).show();
+                    $('#status'+id).text('Deshabilitado');
+                    toastr.error('Producto deshabilitado.');
+                }
             }
         });
     }
