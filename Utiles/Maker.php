@@ -85,7 +85,7 @@ class Maker{
                 if($dosub){
                     $strhtml .= '
                         <li class="nav-item">
-                            <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php" class="nav-link">
+                            <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php?perm='.$idmenu.'" class="nav-link">
                                 <i class="nav-icon fas fa-circle"></i>
                                 <p>
                                     '.ucfirst($submenu['menombre']).'
@@ -98,7 +98,7 @@ class Maker{
                         if($submenu['medeshabilitado'] == "0000-00-00 00:00:00" || is_null($submenu['medeshabilitado'])){
                             $strhtml .= '
                                 <li class="nav-item">
-                                    <a href="../'.$submenu['menombre'].'/'.$subsubmenu['menombre'].'.php" class="nav-link">
+                                    <a href="../'.$submenu['menombre'].'/'.$subsubmenu['menombre'].'.php?perm='.$idmenu.'" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>'.ucfirst($subsubmenu['menombre']).'</p>
                                     </a>
@@ -110,7 +110,7 @@ class Maker{
                 }else{
                     $strhtml .= '
                     <li class="nav-item">
-                        <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php" class="nav-link">
+                        <a href="../'.$menus[0]['menombre'].'/'.$submenu['menombre'].'.php?perm='.$idmenu.'" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p id="'.$submenu['menombre'].'">'.ucfirst($submenu['menombre']).'</p>
                         </a>

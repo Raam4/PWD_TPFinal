@@ -1,7 +1,14 @@
 <?php
 include_once("../../configuracion.php");
-include_once("../../Utiles/sessmanager.php");
-if(!$objSess->activa()){
+$data = data_submitted();
+$objSess = new Session();
+if($objSess->activa()) {
+    $param['user'] = $objSess->getUsuario();
+    $param['roles'] = $objSess->getRoles();
+    $param['rolactivo'] = $objSess->getRolActivo();
+    $perfil = Maker::perfil($param);
+    $menu = Maker::menu($param['rolactivo']);
+}else{
     header('location:../public/login.php');
     exit();
 }

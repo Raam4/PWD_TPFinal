@@ -2,13 +2,12 @@
 include_once("../../configuracion.php");
 $data = data_submitted();
 $objSess = new Session();
-$abmrol = new AbmRol();
 if($objSess->activa()) {
     header('location:../public/Index.php');
     exit();
 }else{
     $perfil = Maker::perfil(null);
-    $menu = Maker::menu(['idrol'=>4]);
+    $menu = Maker::menu(['idrol'=>1]);
 }
 include_once("../estructura/header.php");
 ?>

@@ -1,5 +1,21 @@
 <?php
-include_once("../../Utiles/sessmanager.php");
+include_once("../../configuracion.php");
+$data = data_submitted();
+$objSess = new Session();
+$param = array();
+if($objSess->activa()) {
+    if(isset($data['newrol'])){
+        $objSess->setRolActivo($data['newrol']);
+    }
+    $param['user'] = $objSess->getUsuario();
+    $param['roles'] = $objSess->getRoles();
+    $param['rolactivo'] = $objSess->getRolActivo();
+    $perfil = Maker::perfil($param);
+    $menu = Maker::menu($param['rolactivo']);
+}else{
+    $perfil = Maker::perfil(null);
+    $menu = Maker::menu(['idrol'=>1]);
+}
 include_once("../estructura/header.php");
 ?>
 <div class="content-wrapper">

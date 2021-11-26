@@ -1,11 +1,7 @@
 <?php
-include_once("../../configuracion.php");
 include_once("../../Utiles/sessmanager.php");
 if(!$objSess->activa()){
     header('location:../public/login.php');
-    exit();
-}else if($objSess->getRolActivo()['idrol']!=3){
-    header('location:../public/Index.php');
     exit();
 }
 include_once("../estructura/header.php");
