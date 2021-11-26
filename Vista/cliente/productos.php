@@ -99,6 +99,7 @@ $carroEnCarga = $objSess->getCarrito();
                                 <div class="col-md-6">
                                     <h2 class="card-title"><?php echo $producto['pronombre'];?></h2><br>
                                     <p class="descP"><?php echo $producto['prodetalle'];?></p>
+                                    <p class="descP">Stock: <?php echo $producto['procantstock'];?></p>
                                 </div>
                                 <div class="col-md-6 text-end">
                                     <h5>$<?php echo $producto['proprecio'];?></h5>
