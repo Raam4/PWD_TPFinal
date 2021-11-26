@@ -40,13 +40,16 @@ $productos = $abmprod->buscar(array());
                         <th style="width: 10%">
                             Imagen
                         </th>
-                        <th style="width: 22%">
+                        <th style="width: 5%">
+                            Estado
+                        </th>
+                        <th style="width: 17%">
                             Acciones
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td colspan=8>
+                    <td colspan=9>
                         <button type="button" class="btn btn-success btn-md" onclick="$('#modal').modal('show')"><i class="fas fa-plus" title='Alta Producto'></i> Alta</button>
                     </td>
                     <?php
@@ -77,11 +80,25 @@ $productos = $abmprod->buscar(array());
                                 <img src="../../files/prods/<?=md5($item['pronombre'].$item['idproducto'])?>.jpg" class="img-circle" style="max-width:100%;width:auto;height:auto;" alt="Imagen Producto">
                             </div>
                         </td>
+                        <td id="status<?=$id?>">
+                            <?php if(is_null($item['prodeshabilitado'])) : echo 'Habilitado'; else : echo 'Deshabilitado'; endif?>
+                        </td>
                         <td>
-                            <button id="editar" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
+                            <button id="editar<?=$id?>" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
                                 <i class="fas fa-pen"></i> </button>
-                            <button id="borrar" class="btn btn-danger btn-sm" type="button" onclick="borrar(<?=$id?>)" title='Borrar'>
-                                <i class="fas fa-trash"></i> </button>
+                                <?php
+                                if(is_null($item['prodeshabilitado']) || $item['prodeshabilitado'] == '00-00-00 00:00:00'){
+                                    $statusal = 'inline';
+                                    $statusba = 'none';
+                                }else{
+                                    $statusal = 'none';
+                                    $statusba = 'inline';
+                                }
+                                ?>
+                            <button id="baja<?=$id?>" class="btn btn-danger btn-sm" type="button" style="display: <?=$statusal?>" onclick="manage(0, <?=$id?>)" title='deshabilitar'>
+                                <i class="fas fa-arrow-down"></i> </button>
+                            <button id="alta<?=$id?>" class="btn btn-success btn-sm" type="button" style="display: <?=$statusba?>" onclick="manage(1, <?=$id?>)" title='habilitar'>
+                            <i class="fas fa-arrow-up"></i> </button>
                         </td>
                     </tr>
                     <?php } ?>
@@ -171,15 +188,26 @@ $productos = $abmprod->buscar(array());
         });
     }
 
-    function borrar(id){
+    function manage(stat, id){
         var dataToSend = {'idproducto': id};
         $.ajax({
             method: 'post',
-            url: '../accion/deposito/accionBorrarProd.php',
+            url: '../accion/deposito/accionManageProd.php',
             data: dataToSend,
             type: 'json',
             success: function(data){
-                toastr.error('Producto eliminado.');
+                if(stat == 1){
+                    $('#baja'+id).show();
+                    $('#alta'+id).hide();
+                    $('#status'+id).text('Habilitado');
+                    toastr.success('Producto habilitado.');
+                }
+                if(stat == 0){
+                    $('#baja'+id).hide();
+                    $('#alta'+id).show();
+                    $('#status'+id).text('Deshabilitado');
+                    toastr.error('Producto deshabilitado.');
+                }
             }
         });
     }

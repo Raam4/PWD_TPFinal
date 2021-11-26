@@ -111,10 +111,10 @@ $compras = $abmcompra->buscar(array());
                         </td>
                         <td id="<?=$idce?>" class="btnacciones">
                             <input type="hidden" id="estado<?=$idce?>" value="<?=$idcet?>">
-                            <button class="btn btn-outline-info btn-sm m-1" type="button" id="ace<?=$idce?>" onclick="aceptar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-info btn-sm m-1" type="button" id="ace<?=$idce?>" onclick="manage(1, <?=$idce?>)" disabled>
                                 <i class="fas fa-check"></i> Aceptar
                             </button>
-                            <button class="btn btn-outline-success btn-sm m-1" type="button" id="env<?=$idce?>" onclick="enviar(<?=$idce?>)" disabled>
+                            <button class="btn btn-outline-success btn-sm m-1" type="button" id="env<?=$idce?>" onclick="manage(2, <?=$idce?>)" disabled>
                                 <i class="fas fa-paper-plane"></i> Enviar
                             </button>
                             <button class="btn btn-outline-danger btn-sm m-1" type="button" id="can<?=$idce?>" onclick="cancelar(<?=$idce?>)" disabled>
@@ -154,40 +154,37 @@ $(document).ready(function(){
         }
     });
 });
-function aceptar(idce){
-    var dataToSend = {'idcompraestado' : idce};
-    if(confirm("Desea aceptar el pedido?")){
-        $('#ace'+idce).hide();
-        $('#env'+idce).removeAttr('disabled');
-        $('#env'+idce).show();
-        $('#colestado'+idce).text('Aceptado');
-        $.ajax({
-            method: 'post',
-            url: '../accion/deposito/accionAceptaCompra.php',
-            data: dataToSend,
-            type: 'json',
-            success: function(data){
+function manage(stat, idce){
+    var dataToSend = {'stat' : stat, 'idcompraestado' : idce};
+    if(stat == 1){
+        if(confirm("Desea aceptar el pedido?")){
+            $('#ace'+idce).hide();
+            $('#env'+idce).removeAttr('disabled');
+            $('#env'+idce).show();
+            $('#colestado'+idce).text('Aceptado');
+        }
+    }
+    if(stat == 2){
+        if(confirm("Desea enviar el pedido?")){
+            $('#env'+idce).hide();
+            $('#can'+idce).attr('disabled', true);
+            $('#colestado'+idce).text('Enviado');
+        }
+    }
+    $.ajax({
+        method: 'post',
+        url: '../accion/deposito/accionManageCompra.php',
+        data: dataToSend,
+        type: 'json',
+        success: function(data){
+            if(stat == 1){
                 toastr.success('Pedido aceptado!');
             }
-        });
-    }
-}
-function enviar(idce){
-    var dataToSend = {'idcompraestado' : idce};
-    if(confirm("Desea enviar el pedido?")){
-        $('#env'+idce).hide();
-        $('#can'+idce).attr('disabled', true);
-        $('#colestado'+idce).text('Enviado');
-        $.ajax({
-            method: 'post',
-            url: '../accion/deposito/accionEnviaCompra.php',
-            data: dataToSend,
-            type: 'json',
-            success: function(data){
+            if(stat == 2){
                 toastr.success('Pedido enviado!');
             }
-        });
-    }
+        }
+    });
 }
 function cancelar(idce){
     var dataToSend = {'idcompraestado' : idce};

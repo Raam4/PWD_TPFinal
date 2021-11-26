@@ -35,10 +35,6 @@ include_once("../estructura/header.php");
     });
 
     $(document).on("click", "#altaIt", function() {
-        //modificar uso de input
-        // var nom = $('#itnom_td').val();
-        // var desc = $('#itdescripcion_td').val();
-        // var idp = $('#itidpadre_td').val();
         var currentRow = $(this).closest("tr");
         var nom = currentRow.find("td:eq(1)").html();
         var desc = currentRow.find("td:eq(2)").html();
@@ -74,43 +70,21 @@ include_once("../estructura/header.php");
         }
     });
 
-    $(document).on("click", ".borrarItm", function() {
-        if (confirm('Seguro que desea borrar el registro')) {
-            var id = $(this).data("id");
-            $.ajax({
-                method: 'post',
-                url: '../accion/admin/accionBorrarItm.php',
-                data: {
-                    'idmenu': id,
-                },
-                type: 'json',
-                success: function(data) {
-                    $("#salidaItm").load('../accion/admin/accionListarItemM.php');
-                },
-                error: function(data) {
-                  console.log(data);
-                }
-            })
-        }
-    });
-
-    $(document).on("click", "#habilIt", function() {
-        var id = $(this).data("id");
+    function manage(id){
         $.ajax({
             method: 'post',
-            url: '../accion/admin/accionHabilitarItm.php',
-            data: {
-                'idmenu': id,
-            },
+            url: '../accion/admin/accionManageItm.php',
+            data: {'idmenu': id},
             type: 'json',
             success: function(data) {
                 $("#salidaItm").load('../accion/admin/accionListarItemM.php');
+                toastr.success('Estado modificado');
             },
             error: function(data) {
-                alert("error");
+                console.log(data);
             }
         })
-    });
+    }
 
     function cerrarDlg() {
         $('#dlgItm').hide();

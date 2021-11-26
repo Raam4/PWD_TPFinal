@@ -122,26 +122,21 @@ $roles = $abmrol->buscar(array());
         }
     });
 
-    $(document).on("click", ".borrarUs", function() {
-        if (confirm('Seguro que desea borrar el registro')) {
-            var id = $(this).data("id");
-            $.ajax({
-                method: 'post',
-                url: '../accion/admin/accionBorrarUs.php',
-                data: {
-                    'idusuario': id,
-                },
-                type: 'json',
-                success: function(data) {
-                    $("#salida").load('../accion/admin/accionListarUsuarios.php');
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            })
-        }
-    });
-
+    function manage(id){
+        $.ajax({
+            method: 'post',
+            url: '../accion/admin/accionManageUs.php',
+            data: {'idusuario': id},
+            type: 'json',
+            success: function(data) {
+                $("#salida").load('../accion/admin/accionListarUsuarios.php');
+                toastr.success('Estado modificado');
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        })
+    }
     
     $(document).on("click", ".editarUs", function() {
         var currentRow = $(this).closest("tr");
@@ -219,25 +214,6 @@ $roles = $abmrol->buscar(array());
         })
         return ret;
     }
-    
-
-    $(document).on("click", "#habilUs", function() {
-        var id = $(this).data("id");
-        $.ajax({
-            method: 'post',
-            url: '../accion/admin/accionHabilitarUs.php',
-            data: {
-                'idusuario': id,
-            },
-            type: 'json',
-            success: function(data) {
-                $("#salida").load('../accion/admin/accionListarUsuarios.php');
-            },
-            error: function(data) {
-                alert("error");
-            }
-        })
-    });
 
     function cerrarDlg() {
         // event.preventDefault();
