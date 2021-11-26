@@ -121,7 +121,7 @@ $(document).ready(function(){
             type: 'json',
             success: function(id){
                 if($('#idrubro').val() == ''){
-                    $('#form-modal').off().submit();
+                    location.reload();
                 }else{
                     id = JSON.parse(id);
                     $('#name'+id).text($('#runombre').val());

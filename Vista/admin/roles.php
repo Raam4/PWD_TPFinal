@@ -160,14 +160,17 @@ $(document).ready(function(){
             }
         },
         submitHandler: function() {
-            var dataToSend = $(this).serialize();
+            var dataToSend = {
+                'rodescripcion' : $('#rodescripcion').val(),
+                'idmenu' : $('#idmenu').val()
+            }
             $.ajax({
                 method: 'post',
                 url: '../accion/admin/accionMenuRolNew.php',
                 data: dataToSend,
                 type: 'json',
                 success: function(){
-                    $('#nuevorol').off().submit();
+                    location.reload();
                 }
             });
             return false;

@@ -270,7 +270,7 @@ $productos = $abmprod->buscar(array());
                     contentType: false,
                     cache: false,
                     success: function(){
-                        $('#form-modal').off().submit();
+                        location.reload();
                     }
                 });
             return false;
