@@ -127,7 +127,9 @@ $productos = $abmprod->buscar(array());
                                 <option value="">Seleccionar...</option>
                                 <?php
                                 foreach($rubros as $rub){
-                                    echo '<option value="'.$rub['idrubro'].'">'.$rub['runombre'].'</option>';
+                                    if(is_null($rub['rudeshabilitado']) || $rub['rudeshabilitado'] == '0000-00-00 00:00:00'){
+                                        echo '<option value="'.$rub['idrubro'].'">'.$rub['runombre'].'</option>';
+                                    }
                                 }?>
                             </select>
                         </div>

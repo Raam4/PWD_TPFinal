@@ -62,7 +62,7 @@ $rubros = $abmrubro->buscar(array());
                                 <i class="fas fa-pen"></i>
                             </button>
                             <?php
-                                if(is_null($rub['rudeshabilitado']) || $item['rudeshabilitado'] == '00-00-00 00:00:00'){
+                                if(is_null($rub['rudeshabilitado']) || $rub['rudeshabilitado'] == '0000-00-00 00:00:00'){
                                     $statusal = 'inline';
                                     $statusba = 'none';
                                 }else{

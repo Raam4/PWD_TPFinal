@@ -2,8 +2,8 @@
 include_once("../../../configuracion.php");
 $data = data_submitted();
 $abmprod = new AbmRubro();
-if(isset($stat)){
-    $abmprod->manage(['idrubro' => $data]);
+if(isset($data['stat'])){
+    $abmprod->manage(['idrubro' => $data['idrubro']]);
 }else{
     $abmrub = new AbmRubro();
     if(isset($data['idrubro'])){
