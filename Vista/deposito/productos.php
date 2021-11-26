@@ -84,17 +84,17 @@ $productos = $abmprod->buscar(array());
                             <?php if(is_null($item['prodeshabilitado'])) : echo 'Habilitado'; else : echo 'Deshabilitado'; endif?>
                         </td>
                         <td>
-                            <button id="editar<?=$id?>" class="btn btn-primary btn-sm" type="button" onclick="editar(<?=$id?>)" title='Editar'>
+                            <?php
+                            if(is_null($item['prodeshabilitado']) || $item['prodeshabilitado'] == '00-00-00 00:00:00'){
+                                $statusal = 'inline';
+                                $statusba = 'none';
+                            }else{
+                                $statusal = 'none';
+                                $statusba = 'inline';
+                            }
+                            ?>
+                            <button id="editar<?=$id?>" class="btn btn-primary btn-sm" type="button" style="display: <?=$statusal?>" onclick="editar(<?=$id?>)" title='Editar'>
                                 <i class="fas fa-pen"></i> </button>
-                                <?php
-                                if(is_null($item['prodeshabilitado']) || $item['prodeshabilitado'] == '00-00-00 00:00:00'){
-                                    $statusal = 'inline';
-                                    $statusba = 'none';
-                                }else{
-                                    $statusal = 'none';
-                                    $statusba = 'inline';
-                                }
-                                ?>
                             <button id="baja<?=$id?>" class="btn btn-danger btn-sm" type="button" style="display: <?=$statusal?>" onclick="manage(0, <?=$id?>)" title='deshabilitar'>
                                 <i class="fas fa-arrow-down"></i> </button>
                             <button id="alta<?=$id?>" class="btn btn-success btn-sm" type="button" style="display: <?=$statusba?>" onclick="manage(1, <?=$id?>)" title='habilitar'>
@@ -201,12 +201,14 @@ $productos = $abmprod->buscar(array());
                 if(stat == 1){
                     $('#baja'+id).show();
                     $('#alta'+id).hide();
+                    $('#editar'+id).show();
                     $('#status'+id).text('Habilitado');
                     toastr.success('Producto habilitado.');
                 }
                 if(stat == 0){
                     $('#baja'+id).hide();
                     $('#alta'+id).show();
+                    $('#editar'+id).hide();
                     $('#status'+id).text('Deshabilitado');
                     toastr.error('Producto deshabilitado.');
                 }
