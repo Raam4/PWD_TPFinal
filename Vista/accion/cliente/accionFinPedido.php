@@ -3,8 +3,7 @@ include_once("../../../configuracion.php");
 $data = data_submitted();
 $sess = new Session();
 $abmprod = new AbmProducto;
-$abmcompra = new AbmCompra();
-$abmcompraitem = new AbmCompraitem();
+$abmcompraestado = new AbmCompraEstado();
 $user = $sess->getUsuario();
 $nostock = array();
 foreach($data['arreglo'] as $item){
@@ -14,20 +13,7 @@ foreach($data['arreglo'] as $item){
     }
 }
 if(!$nostock){
-    $compra = ['cofecha' => date('Y-m-d H:i:s'), 'idusuario' => $user['idusuario']];
-    $idcompra = $abmcompra->alta($compra);
-    foreach($data['arreglo'] as $item){
-        $prod = $abmprod->buscar(['idproducto' => $item['idproducto']]);
-        $compraitem = [
-            'idproducto' => $item['idproducto'],
-            'idcompra' => $idcompra,
-            'cicantidad' => $item['cantidad'],
-            'citotal' => $prod[0]['proprecio'] * $item['cantidad']
-        ];
-        $prod[0]['procantstock'] -= $item['cantidad'];
-        $abmprod->modificacion($prod[0]);
-        $abmcompraitem->alta($compraitem);
-    }
+    $idcompra = $abmcompraestado->finPedido($data, $user['idusuario']);
     echo json_encode($idcompra);
 }else{
     echo json_encode($nostock);
