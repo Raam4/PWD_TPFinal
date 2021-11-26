@@ -17,7 +17,7 @@ class AbmUsuario extends AbmSuper{
 
     public function manage($param){
         $obj = $this->buscar($param);
-        if(is_null($obj[0]['usdeshabilitado']) || $obj[0]['usdeshabilitado']=='00-00-00 00:00:00'){
+        if(is_null($obj[0]['usdeshabilitado']) || $obj[0]['usdeshabilitado']=='0000-00-00 00:00:00'){
             $obj[0]['usdeshabilitado'] = date('Y-m-d H:i:s');
         }else{
             $obj[0]['usdeshabilitado'] = null;

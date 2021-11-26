@@ -86,6 +86,9 @@ $carroEnCarga = $objSess->getCarrito();
                 <?php
                     $abmprod = new AbmProducto();
                     foreach($abmprod->buscar(array()) as $producto){
+                        if(!is_null($producto['prodeshabilitado']) && $producto['prodeshabilitado'] != '0000-00-00 00:00:00'){
+                            continue;
+                        }else{
                         $rutaimg="../../files/prods/";
                 ?>
                 <div class="col-md-4 <?=$producto['idrubro'];?>">
@@ -124,7 +127,7 @@ $carroEnCarga = $objSess->getCarrito();
                         </div>
                     </div>
                 </div>
-                <?php } ?>
+                <?php }} ?>
                 <!-- end prod card -->
             </div>
         </div>

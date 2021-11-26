@@ -18,7 +18,7 @@ class AbmRubro extends AbmSuper{
 
     public function manage($param){
         $obj = $this->buscar($param);
-        if(is_null($obj[0]['rudeshabilitado']) || $obj[0]['rudeshabilitado']=='00-00-00 00:00:00'){
+        if(is_null($obj[0]['rudeshabilitado']) || $obj[0]['rudeshabilitado']=='0000-00-00 00:00:00'){
             $obj[0]['rudeshabilitado'] = date('Y-m-d H:i:s');
         }else{
             $obj[0]['rudeshabilitado'] = null;

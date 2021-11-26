@@ -18,7 +18,7 @@ class AbmMenu extends AbmSuper{
 
     public function manage($param){
         $obj = $this->buscar($param);
-        if(is_null($obj[0]['medeshabilitado']) || $obj[0]['medeshabilitado']=='00-00-00 00:00:00'){
+        if(is_null($obj[0]['medeshabilitado']) || $obj[0]['medeshabilitado']=='0000-00-00 00:00:00'){
             $obj[0]['medeshabilitado'] = date('Y-m-d H:i:s');
         }else{
             $obj[0]['medeshabilitado'] = null;
